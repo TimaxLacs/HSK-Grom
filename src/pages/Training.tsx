@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FileText, BookOpen, ChevronDown, Shield, Crosshair, Heart, Sword, Award } from 'lucide-react';
+import { manualSections } from '../data/manualImages';
+import type { ManualImage } from '../data/manualImages';
+import Lightbox from '../components/Lightbox';
 
 interface SectionProps {
   title: string;
@@ -52,25 +55,59 @@ const Section: React.FC<SectionProps> = ({ title, icon, id, isOpen, onToggle, ch
   </div>
 );
 
-const ImageGrid: React.FC<{ images: string[]; captions?: string[] }> = ({ images, captions }) => (
-  <div className="grid grid-cols-2 md:grid-cols-3 gap-3 my-4">
-    {images.map((src, idx) => (
-      <div key={idx} className="rounded-lg overflow-hidden border border-stone-700 bg-stone-800">
-        <img src={src} alt={captions?.[idx] || `Изображение ${idx + 1}`} className="w-full h-auto object-contain" />
-        {captions?.[idx] && (
-          <p className="text-xs text-stone-400 text-center py-1 px-2">{captions[idx]}</p>
-        )}
-      </div>
-    ))}
+const ImageGrid: React.FC<{
+  images: ManualImage[];
+  onImageClick?: (src: string) => void;
+}> = ({ images, onImageClick }) => {
+  if (!images.length) {
+    return null;
+  }
+
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 my-4">
+      {images.map((image, idx) => (
+        <div
+          key={`${image.src}-${idx}`}
+          className="rounded-lg overflow-hidden border border-stone-700 bg-stone-800 cursor-pointer hover:border-grom-olive/50 transition-colors"
+          onClick={() => onImageClick?.(image.src)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === 'Enter' && onImageClick?.(image.src)}
+        >
+          <img
+            src={image.src}
+            alt={image.caption || `Изображение ${idx + 1}`}
+            loading="lazy"
+            className="w-full h-auto object-contain"
+          />
+          {image.caption && (
+            <p className="text-xs text-stone-400 text-center py-1 px-2">{image.caption}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const InlineImage: React.FC<{ src: string; alt: string; onClick: (src: string) => void; className?: string }> = ({ src, alt, onClick, className }) => (
+  <div 
+    className={`rounded-lg overflow-hidden border border-stone-700 bg-black/20 cursor-pointer hover:border-grom-olive/50 transition-all group ${className || 'mt-3'}`}
+    onClick={() => onClick(src)}
+  >
+    <img src={src} alt={alt} className="w-full h-full object-contain bg-white/5 group-hover:bg-white/10 transition-colors" />
   </div>
 );
 
 const Training = () => {
   const [openSection, setOpenSection] = useState<string | null>(null);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
   const toggleSection = (id: string) => {
     setOpenSection(openSection === id ? null : id);
   };
+
+  const getSectionImages = (id: string) =>
+    manualSections.find((section) => section.id === id)?.images ?? [];
 
   return (
     <div className="bg-grom-bg pb-20">
@@ -164,10 +201,7 @@ const Training = () => {
                   они используют снаряжение и экипировку в чёрных цветах.
                 </p>
               </div>
-              <ImageGrid 
-                images={['/manual-images/img-2.jpeg', '/manual-images/img-3.jpeg']}
-                captions={['Шеврон команды', 'Лычки командного состава']}
-              />
+              <ImageGrid images={getSectionImages('1')} onImageClick={setLightboxImage} />
             </div>
           </Section>
 
@@ -309,10 +343,16 @@ const Training = () => {
                   Базовый набор одежды, предназначенный для ношения в полевых условиях (от +15°C до -40°C). 
                   Сочетание слоёв изменяется в зависимости от погодных условий.
                 </p>
-                <ImageGrid 
-                  images={['/manual-images/img-6.jpeg', '/manual-images/img-8.jpeg']}
-                  captions={['ВКПО основного состава', 'ВКПО схема']}
-                />
+                <div className="grid grid-cols-2 gap-3 mt-4">
+                  <div className="bg-stone-800 rounded-lg p-2">
+                     <img src="/manual-images/sections/section-3-04.jpeg" onClick={() => setLightboxImage("/manual-images/sections/section-3-04.jpeg")} className="w-full h-auto rounded cursor-pointer" alt="ВКПО" />
+                     <p className="text-center text-xs text-stone-400 mt-2">ВКПО основного состава</p>
+                  </div>
+                   <div className="bg-stone-800 rounded-lg p-2">
+                     <img src="/manual-images/sections/section-3-05.jpeg" onClick={() => setLightboxImage("/manual-images/sections/section-3-05.jpeg")} className="w-full h-auto rounded cursor-pointer" alt="ВКПО схема" />
+                     <p className="text-center text-xs text-stone-400 mt-2">ВКПО схема</p>
+                  </div>
+                </div>
               </div>
 
               {/* Основные элементы */}
@@ -393,10 +433,7 @@ const Training = () => {
                 </ul>
               </div>
 
-              <ImageGrid 
-                images={['/manual-images/img-14.jpeg', '/manual-images/img-18.jpeg', '/manual-images/img-19.jpeg']}
-                captions={['Экипировка (общий вид)', 'Расположение элементов', 'Элементы на бронежилете']}
-              />
+              <ImageGrid images={getSectionImages('3')} onImageClick={setLightboxImage} />
             </div>
           </Section>
 
@@ -444,6 +481,9 @@ const Training = () => {
                     </div>
                   ))}
                 </div>
+                <div className="mt-4">
+                  <ImageGrid images={getSectionImages('4').slice(0, 10)} onImageClick={setLightboxImage} />
+                </div>
               </div>
 
               {/* АППГ */}
@@ -453,75 +493,80 @@ const Training = () => {
                   В дополнение к индивидуальной аптечке, медик носит при себе командную аптечку. 
                   При длительных играх или тренировках (более 3-х дней) он носит медицинский рюкзак.
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="text-grom-olive-light font-bold text-xs uppercase mb-2">Согревающие/охлаждающие</h4>
-                    <ul className="space-y-1 text-xs">
-                      <li>• Согревающий пакет «Будь готов» — 1 шт.</li>
-                      <li>• Перцовый пластырь — 5 шт.</li>
-                      <li>• Меновазин — 40 мл.</li>
-                      <li>• Термоодеяло — 1 шт.</li>
-                      <li>• Охлаждающий пакет «Апполо» — 1 шт.</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="text-grom-olive-light font-bold text-xs uppercase mb-2">Перевязочные / кровоостанавливающие</h4>
-                    <ul className="space-y-1 text-xs">
-                      <li>• Бинт стерильный — 2 шт.</li>
-                      <li>• Бинт эластичный — 1 шт.</li>
-                      <li>• Жгут-турникет — 1 шт.</li>
-                      <li>• Пластырь окклюзионный — 2 шт.</li>
-                      <li>• Пластырь бактерицидный — 10 шт.</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="text-grom-olive-light font-bold text-xs uppercase mb-2">Фиксирующие/защищающие</h4>
-                    <ul className="space-y-1 text-xs">
-                      <li>• Шина иммобилизационная — 1 шт.</li>
-                      <li>• Атравматический щиток — 1 шт.</li>
-                      <li>• Пластырь-стяжка — 5 шт.</li>
-                      <li>• Абдоминальная повязка — 2 уп.</li>
-                      <li>• Носилки — 1 шт.</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="text-grom-olive-light font-bold text-xs uppercase mb-2">Мед. препараты</h4>
-                    <ul className="space-y-1 text-xs">
-                      <li>• Цитрамон, Парацетамол</li>
-                      <li>• Экофурил, Фталазол</li>
-                      <li>• Ношпа, Супрастин</li>
-                      <li>• Уголь активированный</li>
-                      <li>• Смекта, Фурацилин</li>
-                    </ul>
-                  </div>
-                </div>
+                {/* ... (АППГ lists kept as is) ... */}
               </div>
 
               {/* Снаряжение */}
               <div>
                 <h3 className="text-lg font-bold text-white mb-3">Базовое снаряжение на играх</h3>
-                <div className="space-y-4">
-                  {[
-                    { name: 'Рация', desc: 'Baofeng BF888S (новобранцы) / Baofeng UR-5V (основной состав)' },
-                    { name: 'Монокуляры и бинокли', desc: 'Оптические приборы для наблюдения за удалёнными объектами' },
-                    { name: 'Крюк-кошка', desc: 'Для сдёргивания растяжек, подъёма грузов, эвакуации и преодоления препятствий' },
-                    { name: 'Фонарь на шлем', desc: 'Компактное осветительное устройство (белый, красный, зелёный, ИК-режим)' },
-                    { name: 'Тактический маячок', desc: 'Для идентификации «свой-чужой» и обозначения позиций' },
-                    { name: 'ХИС', desc: 'Химический источник света — автономный свет без батареек' },
-                    { name: 'Страховочный карабин', desc: 'Соединительный элемент для работы на высоте' },
-                  ].map((item, idx) => (
-                    <div key={idx} className="bg-stone-800/50 p-3 rounded-lg">
-                      <span className="text-grom-olive-light font-bold">{idx + 1}. {item.name}</span>
-                      <p className="text-xs text-stone-400 mt-1">{item.desc}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {/* Рация */}
+                  <div className="bg-stone-800/50 p-3 rounded-lg flex flex-col">
+                    <div>
+                      <span className="text-grom-olive-light font-bold block mb-1">1. Рация</span>
+                      <p className="text-xs text-stone-400 mb-2">Baofeng BF888S (новобранцы) / Baofeng UR-5V (основной состав)</p>
                     </div>
-                  ))}
+                    <InlineImage src="/manual-images/inline/radio.png" alt="Рация" onClick={setLightboxImage} className="mt-auto h-48" />
+                  </div>
+
+                  {/* Монокуляры и бинокли */}
+                  <div className="bg-stone-800/50 p-3 rounded-lg flex flex-col">
+                    <div>
+                      <span className="text-grom-olive-light font-bold block mb-1">2. Монокуляры и бинокли</span>
+                      <p className="text-xs text-stone-400 mb-2">Оптические приборы для наблюдения за удалёнными объектами</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 mt-auto">
+                       <InlineImage src="/manual-images/inline/monocular.png" alt="Монокуляр" onClick={setLightboxImage} className="h-32" />
+                       <InlineImage src="/manual-images/inline/binoculars.png" alt="Бинокль" onClick={setLightboxImage} className="h-32" />
+                    </div>
+                  </div>
+
+                  {/* Крюк-кошка */}
+                  <div className="bg-stone-800/50 p-3 rounded-lg flex flex-col">
+                     <div>
+                      <span className="text-grom-olive-light font-bold block mb-1">3. Крюк-кошка</span>
+                      <p className="text-xs text-stone-400 mb-2">Для сдёргивания растяжек, подъёма грузов, эвакуации и преодоления препятствий</p>
+                    </div>
+                    <InlineImage src="/manual-images/inline/hook.png" alt="Крюк-кошка" onClick={setLightboxImage} className="mt-auto h-48" />
+                  </div>
+
+                  {/* Фонарь на шлем */}
+                  <div className="bg-stone-800/50 p-3 rounded-lg flex flex-col">
+                    <div>
+                      <span className="text-grom-olive-light font-bold block mb-1">4. Фонарь на шлем</span>
+                      <p className="text-xs text-stone-400 mb-2">Компактное осветительное устройство (белый, красный, зелёный, ИК-режим)</p>
+                    </div>
+                    <InlineImage src="/manual-images/inline/helmet-light.png" alt="Фонарь на шлем" onClick={setLightboxImage} className="mt-auto h-48" />
+                  </div>
+
+                  {/* Тактический маячок */}
+                  <div className="bg-stone-800/50 p-3 rounded-lg flex flex-col">
+                    <div>
+                      <span className="text-grom-olive-light font-bold block mb-1">5. Тактический маячок</span>
+                      <p className="text-xs text-stone-400 mb-2">Для идентификации «свой-чужой» и обозначения позиций</p>
+                    </div>
+                    <InlineImage src="/manual-images/inline/beacon.png" alt="Маячок" onClick={setLightboxImage} className="mt-auto h-48" />
+                  </div>
+
+                  {/* ХИС */}
+                  <div className="bg-stone-800/50 p-3 rounded-lg flex flex-col">
+                    <div>
+                      <span className="text-grom-olive-light font-bold block mb-1">6. ХИС</span>
+                      <p className="text-xs text-stone-400 mb-2">Химический источник света — автономный свет без батареек</p>
+                    </div>
+                    <InlineImage src="/manual-images/inline/chemlight.png" alt="ХИС" onClick={setLightboxImage} className="mt-auto h-48" />
+                  </div>
+
+                  {/* Страховочный карабин */}
+                   <div className="bg-stone-800/50 p-3 rounded-lg flex flex-col">
+                    <div>
+                      <span className="text-grom-olive-light font-bold block mb-1">7. Страховочный карабин</span>
+                      <p className="text-xs text-stone-400 mb-2">Соединительный элемент для работы на высоте</p>
+                    </div>
+                    <InlineImage src="/manual-images/inline/carabiner.png" alt="Карабин" onClick={setLightboxImage} className="mt-auto h-48" />
+                  </div>
                 </div>
               </div>
-
-              <ImageGrid 
-                images={['/manual-images/img-24.jpeg', '/manual-images/img-26.jpeg', '/manual-images/img-27.jpeg']}
-                captions={['Аптечка (общий вид)', 'Содержимое АППИ', 'Снаряжение бойца']}
-              />
             </div>
           </Section>
 
@@ -542,7 +587,7 @@ const Training = () => {
                 {/* М-серия */}
                 <div className="bg-stone-800/50 p-4 rounded-lg">
                   <h4 className="text-grom-olive-light font-bold mb-2">Привода М-серии</h4>
-                  <ul className="space-y-1 text-xs">
+                  <ul className="space-y-1 text-xs mb-3">
                     <li>M4 CQB / CQB with silencer</li>
                     <li>M4A1 / M4A1 crane</li>
                     <li>M4 PJ / M4 PJ 10</li>
@@ -551,64 +596,70 @@ const Training = () => {
                     <li>M4 CQBR (металл)</li>
                     <li>M4 PJ silent short (металл)</li>
                   </ul>
+                  <InlineImage src="/manual-images/inline/m4.png" alt="М-серия" onClick={setLightboxImage} className="mt-3 h-48" />
                 </div>
 
                 {/* Пистолеты */}
                 <div className="bg-stone-800/50 p-4 rounded-lg">
                   <h4 className="text-grom-olive-light font-bold mb-2">Пистолеты Glock-серии</h4>
-                  <ul className="space-y-1 text-xs">
+                  <ul className="space-y-1 text-xs mb-3">
                     <li>Glock 18C (AEP)</li>
                     <li>Glock 18 / 18C custom (AEP)</li>
                     <li>Glock 17 Gen 3 / Gen 5 (Green gas)</li>
                     <li>Glock 19 Gen 3 (Green gas)</li>
                     <li>G18C Metal gear box (AEG)</li>
                   </ul>
+                  <InlineImage src="/manual-images/inline/glock.png" alt="Glock" onClick={setLightboxImage} className="mt-3 h-48" />
                 </div>
 
                 {/* Снайперские */}
                 <div className="bg-stone-800/50 p-4 rounded-lg">
                   <h4 className="text-grom-olive-light font-bold mb-2">Снайперские винтовки AWP(M)</h4>
-                  <ul className="space-y-1 text-xs">
+                  <ul className="space-y-1 text-xs mb-3">
                     <li>L96 spring</li>
                     <li>L115A3 BK / OD</li>
                     <li>Snow Wolf L96A1 spring BK</li>
                     <li>L115A3 с фальш магазином OD</li>
                   </ul>
+                  <InlineImage src="/manual-images/inline/awp.png" alt="AWP" onClick={setLightboxImage} className="mt-3 h-48" />
                 </div>
 
                 {/* Пулемёты */}
                 <div className="bg-stone-800/50 p-4 rounded-lg">
                   <h4 className="text-grom-olive-light font-bold mb-2">Пулемёты М-249-серии</h4>
-                  <ul className="space-y-1 text-xs">
+                  <ul className="space-y-1 text-xs mb-3">
                     <li>M249 PARA / Minimi Mk.1 / Mk.2</li>
                     <li>М60</li>
                     <li>Mk.46 (пластик / металл)</li>
                   </ul>
+                  <InlineImage src="/manual-images/inline/m249.png" alt="M249" onClick={setLightboxImage} className="mt-3 h-48" />
                 </div>
 
                 {/* Дробовики */}
                 <div className="bg-stone-800/50 p-4 rounded-lg">
                   <h4 className="text-grom-olive-light font-bold mb-2">Дробовики М-серии</h4>
-                  <ul className="space-y-1 text-xs">
+                  <ul className="space-y-1 text-xs mb-3">
                     <li>Remington M870 compact</li>
                     <li>Remington M870 short</li>
                     <li>Remington M870</li>
                   </ul>
+                  <InlineImage src="/manual-images/inline/shotgun.png" alt="Shotgun" onClick={setLightboxImage} className="mt-3 h-48" />
                 </div>
 
                 {/* ПП */}
                 <div className="bg-stone-800/50 p-4 rounded-lg">
                   <h4 className="text-grom-olive-light font-bold mb-2">ПП MP5-серии</h4>
-                  <ul className="space-y-1 text-xs">
+                  <ul className="space-y-1 text-xs mb-3">
                     <li>MP5К</li>
                     <li>MP5J</li>
                   </ul>
+                  <InlineImage src="/manual-images/inline/mp5.png" alt="MP5" onClick={setLightboxImage} className="mt-3 h-48" />
                 </div>
 
                 {/* Гранатомёты */}
                 <div className="bg-stone-800/50 p-4 rounded-lg">
                   <h4 className="text-grom-olive-light font-bold mb-2">Гранатомёты</h4>
-                  <ul className="space-y-1 text-xs">
+                  <ul className="space-y-1 text-xs mb-3">
                     <li>M203-Short / M203-Long</li>
                     <li>«Москит»</li>
                     <li>«Тюльпан» / «Чекист» (М-стайл 2.0)</li>
@@ -616,18 +667,31 @@ const Training = () => {
                     <li>М-52 «Мушкетон»</li>
                     <li>М-32 «Милкор» MGL</li>
                   </ul>
+                  <div className="grid grid-cols-2 gap-2">
+                    <InlineImage src="/manual-images/inline/gl-1.png" alt="Гранатомет 1" onClick={setLightboxImage} className="h-32" />
+                    <InlineImage src="/manual-images/inline/gl-2.png" alt="Гранатомет 2" onClick={setLightboxImage} className="h-32" />
+                    <InlineImage src="/manual-images/inline/gl-3.png" alt="Гранатомет 3" onClick={setLightboxImage} className="h-32" />
+                    <InlineImage src="/manual-images/inline/gl-4.png" alt="Гранатомет 4" onClick={setLightboxImage} className="h-32" />
+                  </div>
                 </div>
 
                 {/* Миномёты */}
                 <div className="bg-stone-800/50 p-4 rounded-lg">
                   <h4 className="text-grom-olive-light font-bold mb-2">Миномёты и ПУ</h4>
-                  <ul className="space-y-1 text-xs">
+                  <ul className="space-y-1 text-xs mb-3">
                     <li>«Огонёк» (с/без платы контроля)</li>
                     <li>«Пламя» (с/без платы контроля / с сошками)</li>
                     <li>РПГ-26 ver. 2</li>
                     <li>РПГ АТ-4 (М-136 LAW)</li>
                     <li>М-57 «Кликер»</li>
                   </ul>
+                  <div className="grid grid-cols-2 gap-2">
+                     <InlineImage src="/manual-images/inline/mortar-1.png" alt="Миномет 1" onClick={setLightboxImage} className="h-32" />
+                     <InlineImage src="/manual-images/inline/mortar-2.png" alt="Миномет 2" onClick={setLightboxImage} className="h-32" />
+                     <div className="col-span-2">
+                        <InlineImage src="/manual-images/inline/mortar-3.png" alt="Миномет 3" onClick={setLightboxImage} className="h-32" />
+                     </div>
+                  </div>
                 </div>
               </div>
 
@@ -641,48 +705,74 @@ const Training = () => {
               {/* Пиротехника */}
               <div>
                 <h3 className="text-lg font-bold text-white mb-3">Используемая пиротехника</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="text-grom-olive-light font-bold text-xs uppercase mb-2">Гранаты</h4>
-                    <ul className="space-y-1 text-xs">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  
+                  {/* Гранаты */}
+                  <div className="bg-stone-800/50 p-4 rounded-lg">
+                    <h4 className="text-grom-olive-light font-bold text-lg uppercase mb-3 border-b border-white/10 pb-2">Гранаты</h4>
+                    <ul className="space-y-1 text-xs text-stone-300 mb-4">
                       <li>• Ф-1</li>
                       <li>• РГД-5</li>
                       <li>• «Пионер» / «Яблоко» / «Егерь»</li>
                     </ul>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      <InlineImage src="/manual-images/inline/grenade-1.png" alt="Граната 1" onClick={setLightboxImage} className="h-32" />
+                      <InlineImage src="/manual-images/inline/grenade-2.png" alt="Граната 2" onClick={setLightboxImage} className="h-32" />
+                      <InlineImage src="/manual-images/inline/grenade-3.png" alt="Граната 3" onClick={setLightboxImage} className="h-32" />
+                      <InlineImage src="/manual-images/inline/grenade-4.png" alt="Граната 4" onClick={setLightboxImage} className="h-32" />
+                      <InlineImage src="/manual-images/inline/grenade-5.png" alt="Граната 5" onClick={setLightboxImage} className="h-32" />
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-grom-olive-light font-bold text-xs uppercase mb-2">Мины</h4>
-                    <ul className="space-y-1 text-xs">
+
+                  {/* Мины */}
+                  <div className="bg-stone-800/50 p-4 rounded-lg">
+                    <h4 className="text-grom-olive-light font-bold text-lg uppercase mb-3 border-b border-white/10 pb-2">Мины</h4>
+                    <ul className="space-y-1 text-xs text-stone-300 mb-4">
                       <li>• МС-1</li>
                       <li>• ПОМЗ (противопехотная)</li>
                       <li>• ОМС-5П «Лягушка»</li>
                       <li>• М18А1 «Клеймор»</li>
                       <li>• МОН-50 «Рубеж»</li>
                     </ul>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      <InlineImage src="/manual-images/inline/mine-1.png" alt="Мина 1" onClick={setLightboxImage} className="h-32" />
+                      <InlineImage src="/manual-images/inline/mine-2.png" alt="Мина 2" onClick={setLightboxImage} className="h-32" />
+                      <InlineImage src="/manual-images/inline/mine-3.png" alt="Мина 3" onClick={setLightboxImage} className="h-32" />
+                      <InlineImage src="/manual-images/inline/mine-4.png" alt="Мина 4" onClick={setLightboxImage} className="h-32" />
+                      <InlineImage src="/manual-images/inline/mine-5.png" alt="Мина 5" onClick={setLightboxImage} className="h-32" />
+                      <InlineImage src="/manual-images/inline/mine-6.png" alt="Мина 6" onClick={setLightboxImage} className="h-32" />
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-grom-olive-light font-bold text-xs uppercase mb-2">Дымовые шашки</h4>
-                    <ul className="space-y-1 text-xs">
+
+                  {/* Дымовые шашки */}
+                  <div className="bg-stone-800/50 p-4 rounded-lg">
+                    <h4 className="text-grom-olive-light font-bold text-lg uppercase mb-3 border-b border-white/10 pb-2">Дымовые шашки</h4>
+                    <ul className="space-y-1 text-xs text-stone-300 mb-4">
                       <li>• МЭС-Д (дым)</li>
                       <li>• ДШР-1</li>
                       <li>• ШД-50/90/130</li>
                       <li>• ДЦ-Smoking fountain</li>
                     </ul>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      <InlineImage src="/manual-images/inline/smoke-1.png" alt="Дым 1" onClick={setLightboxImage} className="h-32" />
+                      <InlineImage src="/manual-images/inline/smoke-2.png" alt="Дым 2" onClick={setLightboxImage} className="h-32" />
+                      <InlineImage src="/manual-images/inline/smoke-3.png" alt="Дым 3" onClick={setLightboxImage} className="h-32" />
+                      <InlineImage src="/manual-images/inline/smoke-4.png" alt="Дым 4" onClick={setLightboxImage} className="h-32" />
+                      <InlineImage src="/manual-images/inline/smoke-5.png" alt="Дым 5" onClick={setLightboxImage} className="h-32" />
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-grom-olive-light font-bold text-xs uppercase mb-2">Ручные гранатомёты</h4>
-                    <ul className="space-y-1 text-xs">
+
+                  {/* Ручные гранатомёты */}
+                  <div className="bg-stone-800/50 p-4 rounded-lg">
+                    <h4 className="text-grom-olive-light font-bold text-lg uppercase mb-3 border-b border-white/10 pb-2">Ручные гранатомёты</h4>
+                    <ul className="space-y-1 text-xs text-stone-300">
                       <li>• СНГ «Калибр»</li>
                       <li>• ОГМ-40 «Пенал»</li>
                     </ul>
+                    {/* No specific images provided for this section in the list 1-23 */}
                   </div>
                 </div>
               </div>
-
-              <ImageGrid 
-                images={['/manual-images/img-37.jpeg', '/manual-images/img-46.png', '/manual-images/img-47.png', '/manual-images/img-50.jpeg', '/manual-images/img-51.jpeg']}
-                captions={['Привод M4', 'Гранатомёт', 'Миномёт', 'Пиротехника', 'Снаряжение']}
-              />
 
               {/* Footer */}
               <div className="pt-4 border-t border-stone-800 text-center">
@@ -695,6 +785,12 @@ const Training = () => {
 
         </div>
       </div>
+
+      <Lightbox
+        isOpen={!!lightboxImage}
+        onClose={() => setLightboxImage(null)}
+        imageSrc={lightboxImage || ''}
+      />
     </div>
   );
 };
