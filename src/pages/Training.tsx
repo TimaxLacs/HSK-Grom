@@ -112,9 +112,8 @@ const Training = () => {
   return (
     <div className="bg-grom-bg pb-20">
       {/* Header */}
-      <section className="relative h-[40vh] md:h-[50vh] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[40vh] md:h-[50vh] flex items-center justify-center overflow-hidden bg-stone-900">
         <div className="absolute inset-0 bg-black/60 z-10" />
-        <div className="absolute inset-0 bg-[url('/team-cqb.jpg')] bg-cover bg-center opacity-70 animate-kenburns" />
         
         <div className="relative z-20 text-center px-4">
           <motion.h1 
