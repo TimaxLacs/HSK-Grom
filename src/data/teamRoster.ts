@@ -6,10 +6,11 @@ export type TeamMember = {
   image: string;
 };
 
-/** Карточка в составе с подписью специальности */
+/** Страница «Команда»: подзаголовок = specialty, на карточке опционально duty (должность) */
 export type TeamSlot = {
   member: TeamMember;
   specialty: string;
+  duty?: string;
 };
 
 export const commander: TeamMember = {
@@ -116,30 +117,52 @@ export const commanderSpecialtyHome = 'Штурмовик';
 
 /** Страница «Команда»: 2 отделения → специалисты → новобранцы */
 export const teamSquad1Slots: TeamSlot[] = [
-  { member: commander, specialty: 'Командир' },
-  { member: deputySquad1, specialty: 'Марксман' },
-  { member: squad1Sergeant, specialty: 'Снайпер' },
+  { member: commander, specialty: 'Штурмовик', duty: 'Командир' },
+  { member: deputySquad1, specialty: 'Марксман', duty: 'Замком' },
+  { member: squad1Sergeant, specialty: 'Снайпер', duty: 'Старшина' },
   { member: polsha, specialty: 'Медик' },
   { member: goblin, specialty: 'Пулемётчик' },
 ];
 
 export const teamSquad2Slots: TeamSlot[] = [
-  { member: deputySquad2, specialty: 'Сапёр' },
-  { member: squad2Sergeant, specialty: 'Штурмовик' },
+  { member: deputySquad2, specialty: 'Сапёр', duty: 'Замком' },
+  { member: squad2Sergeant, specialty: 'Штурмовик', duty: 'Старшина' },
   { member: muravey, specialty: 'Гранатомётчик' },
   { member: valka, specialty: 'Медик' },
   { member: demon, specialty: 'Штурмовик' },
 ];
 
-const recruitMembers: TeamMember[] = [
-  { name: 'Андрей Жданов', callsign: 'Штиль', image: asset('/avatars/shtil.png') },
-  { name: 'Максим Василенко', callsign: 'Овод', image: asset('/avatars/injir.png') },
-  { name: 'Екатерина Крамскова', callsign: 'Кэт', image: asset('/avatars/ket.png') },
-  { name: 'Владимир Степанов', callsign: 'Радар', image: asset('/avatars/radar.png') },
-  { name: 'Юрий Игнатев', callsign: 'Матрос', image: asset('/avatars/matros.png') },
-];
+const recruitShitil: TeamMember = {
+  name: 'Андрей Жданов',
+  callsign: 'Штиль',
+  image: asset('/avatars/shtil.png'),
+};
+const recruitOvod: TeamMember = {
+  name: 'Максим Василенко',
+  callsign: 'Овод',
+  image: asset('/avatars/injir.png'),
+};
+const recruitKet: TeamMember = {
+  name: 'Екатерина Крамскова',
+  callsign: 'Кэт',
+  image: asset('/avatars/ket.png'),
+};
+const recruitRadar: TeamMember = {
+  name: 'Владимир Степанов',
+  callsign: 'Радар',
+  image: asset('/avatars/radar.png'),
+};
+const recruitMatros: TeamMember = {
+  name: 'Юрий Игнатев',
+  callsign: 'Матрос',
+  image: asset('/avatars/matros.png'),
+};
 
-export const teamRecruitSlots: TeamSlot[] = recruitMembers.map((member) => ({
-  member,
-  specialty: 'Новобранец',
-}));
+/** duty — составная подпись на карточке новобранца */
+export const teamRecruitSlots: { member: TeamMember; duty: string }[] = [
+  { member: recruitShitil, duty: 'Новобранец-сапёр' },
+  { member: recruitOvod, duty: 'Новобранец-штурмовик' },
+  { member: recruitKet, duty: 'Новобранец-медик' },
+  { member: recruitRadar, duty: 'Новобранец-связист' },
+  { member: recruitMatros, duty: 'Новобранец-снайпер' },
+];

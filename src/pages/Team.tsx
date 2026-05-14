@@ -73,7 +73,7 @@ const Team = () => {
                       <h4 className={specialtySubClass}>{slot1.specialty}</h4>
                       <div className="flex justify-center flex-1 min-h-0">
                         <div className="w-full max-w-[280px]">
-                          <SoldierCard {...slot1.member} />
+                          <SoldierCard {...slot1.member} duty={slot1.duty} />
                         </div>
                       </div>
                     </div>
@@ -81,7 +81,7 @@ const Team = () => {
                       <h4 className={specialtySubClass}>{slot2.specialty}</h4>
                       <div className="flex justify-center flex-1 min-h-0">
                         <div className="w-full max-w-[280px]">
-                          <SoldierCard {...slot2.member} />
+                          <SoldierCard {...slot2.member} duty={slot2.duty} />
                         </div>
                       </div>
                     </div>
@@ -101,7 +101,7 @@ const Team = () => {
                     <h4 className={specialtySubClass}>{slot.specialty}</h4>
                     <div className="flex justify-center">
                       <div className="w-full max-w-[280px]">
-                        <SoldierCard {...slot.member} />
+                        <SoldierCard {...slot.member} duty={slot.duty} />
                       </div>
                     </div>
                   </div>
@@ -116,7 +116,7 @@ const Team = () => {
                     <h4 className={specialtySubClass}>{slot.specialty}</h4>
                     <div className="flex justify-center">
                       <div className="w-full max-w-[280px]">
-                        <SoldierCard {...slot.member} />
+                        <SoldierCard {...slot.member} duty={slot.duty} />
                       </div>
                     </div>
                   </div>
@@ -132,7 +132,7 @@ const Team = () => {
               <h3 className={squadPanelTitleClass}>Связист</h3>
               <div className="flex flex-1 flex-wrap justify-center items-center gap-8">
                 <div className="w-full max-w-[280px]">
-                  <SoldierCard {...radioman} />
+                  <SoldierCard {...radioman} duty="Связист" />
                 </div>
               </div>
             </div>
@@ -141,7 +141,7 @@ const Team = () => {
               <h3 className={squadPanelTitleClass}>Миномётчик</h3>
               <div className="flex flex-1 flex-wrap justify-center items-center gap-8">
                 <div className="w-full max-w-[280px]">
-                  <SoldierCard {...mortarman} />
+                  <SoldierCard {...mortarman} duty="Миномётчик" />
                 </div>
               </div>
             </div>
@@ -152,9 +152,9 @@ const Team = () => {
           <div className={`${squadPanelBoxClass} max-w-6xl mx-auto`}>
             <h3 className={squadPanelTitleClass}>Новобранцы</h3>
             <div className="flex flex-wrap justify-center gap-8">
-              {teamRecruitSlots.map(({ member }) => (
+              {teamRecruitSlots.map(({ member, duty }) => (
                 <div key={member.callsign} className="w-full max-w-[280px]">
-                  <SoldierCard {...member} />
+                  <SoldierCard {...member} duty={duty} />
                 </div>
               ))}
             </div>
