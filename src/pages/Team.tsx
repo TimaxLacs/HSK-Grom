@@ -23,6 +23,9 @@ const squadPanelTitleClass =
 const squadPanelBoxClass =
   'rounded-xl border border-stone-800/80 bg-stone-900/30 p-6 sm:p-8';
 
+const specialtySubClass =
+  'text-sm font-semibold uppercase tracking-[0.2em] text-stone-400 mb-4 text-center';
+
 const Team = () => {
   return (
     <div className="bg-grom-bg pb-20">
@@ -54,24 +57,68 @@ const Team = () => {
         <section>
           <SectionTitle>Основной состав</SectionTitle>
 
-          <div className="grid md:grid-cols-2 gap-10 lg:gap-16 max-w-5xl mx-auto">
+          {/* Десктоп: две колонки, строки синхронны по высоте */}
+          <div
+            className={`hidden md:block ${squadPanelBoxClass} max-w-6xl mx-auto`}
+          >
+            <div className="grid grid-cols-2 gap-x-10 lg:gap-x-14 gap-y-12">
+              <h3 className={`${squadPanelTitleClass} col-start-1 mb-0`}>1-е отделение</h3>
+              <h3 className={`${squadPanelTitleClass} col-start-2 mb-0`}>2-е отделение</h3>
+
+              {teamSquad1Slots.map((slot1, index) => {
+                const slot2 = teamSquad2Slots[index];
+                return (
+                  <React.Fragment key={`row-${slot1.member.callsign}-${slot2.member.callsign}`}>
+                    <div className="flex flex-col items-stretch">
+                      <h4 className={specialtySubClass}>{slot1.specialty}</h4>
+                      <div className="flex justify-center flex-1 min-h-0">
+                        <div className="w-full max-w-[280px]">
+                          <SoldierCard {...slot1.member} />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-stretch">
+                      <h4 className={specialtySubClass}>{slot2.specialty}</h4>
+                      <div className="flex justify-center flex-1 min-h-0">
+                        <div className="w-full max-w-[280px]">
+                          <SoldierCard {...slot2.member} />
+                        </div>
+                      </div>
+                    </div>
+                  </React.Fragment>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Мобильные: отделения столбиком, подзаголовки специальностей */}
+          <div className="md:hidden space-y-10 max-w-lg mx-auto">
             <div className={squadPanelBoxClass}>
               <h3 className={squadPanelTitleClass}>1-е отделение</h3>
-              <div className="flex flex-wrap justify-center gap-8">
-                {teamSquad1Slots.map(({ member, specialty }) => (
-                  <div key={member.callsign} className="w-full max-w-[280px]">
-                    <SoldierCard {...member} duty={specialty} />
+              <div className="space-y-10">
+                {teamSquad1Slots.map((slot) => (
+                  <div key={slot.member.callsign}>
+                    <h4 className={specialtySubClass}>{slot.specialty}</h4>
+                    <div className="flex justify-center">
+                      <div className="w-full max-w-[280px]">
+                        <SoldierCard {...slot.member} />
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-
             <div className={squadPanelBoxClass}>
               <h3 className={squadPanelTitleClass}>2-е отделение</h3>
-              <div className="flex flex-wrap justify-center gap-8">
-                {teamSquad2Slots.map(({ member, specialty }) => (
-                  <div key={member.callsign} className="w-full max-w-[280px]">
-                    <SoldierCard {...member} duty={specialty} />
+              <div className="space-y-10">
+                {teamSquad2Slots.map((slot) => (
+                  <div key={slot.member.callsign}>
+                    <h4 className={specialtySubClass}>{slot.specialty}</h4>
+                    <div className="flex justify-center">
+                      <div className="w-full max-w-[280px]">
+                        <SoldierCard {...slot.member} />
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -80,21 +127,21 @@ const Team = () => {
         </section>
 
         <section>
-          <div className="grid md:grid-cols-2 gap-10 lg:gap-16 max-w-5xl mx-auto">
-            <div className={squadPanelBoxClass}>
+          <div className="grid md:grid-cols-2 gap-10 lg:gap-16 max-w-5xl mx-auto items-stretch">
+            <div className={`${squadPanelBoxClass} flex flex-col h-full`}>
               <h3 className={squadPanelTitleClass}>Связист</h3>
-              <div className="flex flex-wrap justify-center gap-8">
+              <div className="flex flex-1 flex-wrap justify-center items-center gap-8">
                 <div className="w-full max-w-[280px]">
-                  <SoldierCard {...radioman} duty="Связист" />
+                  <SoldierCard {...radioman} />
                 </div>
               </div>
             </div>
 
-            <div className={squadPanelBoxClass}>
+            <div className={`${squadPanelBoxClass} flex flex-col h-full`}>
               <h3 className={squadPanelTitleClass}>Миномётчик</h3>
-              <div className="flex flex-wrap justify-center gap-8">
+              <div className="flex flex-1 flex-wrap justify-center items-center gap-8">
                 <div className="w-full max-w-[280px]">
-                  <SoldierCard {...mortarman} duty="Миномётчик" />
+                  <SoldierCard {...mortarman} />
                 </div>
               </div>
             </div>
@@ -105,9 +152,9 @@ const Team = () => {
           <div className={`${squadPanelBoxClass} max-w-6xl mx-auto`}>
             <h3 className={squadPanelTitleClass}>Новобранцы</h3>
             <div className="flex flex-wrap justify-center gap-8">
-              {teamRecruitSlots.map(({ member, specialty }) => (
+              {teamRecruitSlots.map(({ member }) => (
                 <div key={member.callsign} className="w-full max-w-[280px]">
-                  <SoldierCard {...member} duty={specialty} />
+                  <SoldierCard {...member} />
                 </div>
               ))}
             </div>

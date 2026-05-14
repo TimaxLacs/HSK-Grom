@@ -1,10 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Shield, Target, Users, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Shield, Target, Users, ArrowRight, QrCode, X } from 'lucide-react';
 import ContactModal from '../components/ContactModal';
+import SoldierCard from '../components/SoldierCard';
+import { asset } from '../utils/asset';
+import { commander, commanderSpecialtyHome, technician, homeSquads } from '../data/teamRoster';
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isQrOpen, setIsQrOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -25,10 +29,11 @@ const Home = () => {
             autoPlay 
             loop 
             muted 
-            playsInline 
+            playsInline
+            preload="auto"
             className="w-full h-full object-cover opacity-40"
           >
-            <source src="/hero.mp4" type="video/mp4" />
+            <source src={asset('/hero.mp4')} type="video/mp4" />
           </video>
         </div>
 
@@ -40,7 +45,7 @@ const Home = () => {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-black font-stencil tracking-tighter text-white mb-6 drop-shadow-2xl">
-              ЧСК <span className="text-grom-olive">ГРОМ</span>
+              ЧСК <span className="text-grom-olive">«ГРОМ»</span>
             </h1>
             <p className="text-xl md:text-2xl text-stone-200 mb-4 font-light tracking-wide max-w-2xl mx-auto">
               Непоколебимость во тьме, свет победы впереди
@@ -49,14 +54,25 @@ const Home = () => {
               Военно-патриотическая страйкбольная команда
             </p>
             
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setIsModalOpen(true)}
-              className="bg-grom-olive hover:bg-grom-olive-dark text-white font-bold py-4 px-10 rounded-none uppercase tracking-widest text-lg transition-all shadow-lg hover:shadow-grom-olive/20 border border-grom-olive hover:border-grom-olive-light"
-            >
-              Вступить в команду
-            </motion.button>
+            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsModalOpen(true)}
+                className="bg-grom-olive hover:bg-grom-olive-dark text-white font-bold py-4 px-10 rounded-none uppercase tracking-widest text-lg transition-all shadow-lg hover:shadow-grom-olive/20 border border-grom-olive hover:border-grom-olive-light"
+              >
+                Вступить в команду
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsQrOpen(true)}
+                className="flex items-center gap-2 bg-transparent hover:bg-white/10 text-white font-bold py-4 px-8 rounded-none uppercase tracking-widest text-sm transition-all border border-stone-500 hover:border-white"
+              >
+                <QrCode size={20} />
+                QR-код
+              </motion.button>
+            </div>
           </motion.div>
         </div>
 
@@ -87,17 +103,17 @@ const Home = () => {
                 О КОМАНДЕ
               </h2>
               <p className="text-stone-300 text-lg leading-relaxed mb-6">
-                ЧСК (Частная страйкбольная команда) "Гром" — это военно-патриотическая группа, 
+                ЧСК (Частная страйкбольная команда) «Гром» — это военно-патриотическая группа, 
                 которая была создана с целью объединения людей для игр на разных локациях и с разными сценариями.
               </p>
               <p className="text-stone-300 text-lg leading-relaxed mb-6">
-                Помимо участия в играх, в команде размещаются учебные материалы по топографии, картографии, 
-                разведке, полевой медицине, тактике и стратегии. Всё это применяется в игровом процессе 
-                и, при необходимости, вне его.
+                Помимо проведения игр и тренировок, в группе команды размещаются учебные материалы по: огневой, инженерной, тактической, медицинской подготовкам, а также основы ориентирования и военная топография в целом.
+              </p>
+              <p className="text-stone-300 text-lg leading-relaxed mb-6">
+                С целью поддержания дисциплины и сплочения команды, бойцы используют единообразное снаряжение и носят экипировку в расцветке «мультикам».
               </p>
               <p className="text-stone-300 text-lg leading-relaxed mb-8">
-                Для укрепления дисциплины и сплочённости, члены ЧСК "Гром" носят снаряжение и экипировку 
-                в расцветке "мультикам", а также занимают определённые должности и специальности в команде.
+                Помимо этого, в команде действует приоритет специальностей, занимаемых бойцами основного состава.
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -128,8 +144,8 @@ const Home = () => {
             >
               <div className="relative z-10 rounded-lg overflow-hidden shadow-2xl border border-white/10">
                 <img 
-                  src="/team-cqb.jpg" 
-                  alt="Team Action" 
+                  src={asset('/about-side.png')} 
+                  alt="Снаряжение команды" 
                   className="w-full h-auto object-cover"
                 />
               </div>
@@ -137,6 +153,68 @@ const Home = () => {
               <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-stone-900 z-0 rounded-bl-3xl"></div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      <section className="relative py-24 px-4 bg-gradient-to-b from-grom-bg via-stone-950/40 to-grom-bg border-t border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-14"
+          >
+            <h2 className="text-4xl font-bold font-stencil text-white mb-3 uppercase tracking-wide">
+              Командный состав
+            </h2>
+            <div className="w-24 h-1 bg-grom-olive mx-auto" />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex justify-center mb-14"
+          >
+            <div className="w-full max-w-xs">
+              <SoldierCard {...commander} duty="Командир" specialty={commanderSpecialtyHome} />
+            </div>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-10 lg:gap-16 max-w-5xl mx-auto mb-14">
+            {homeSquads.map((squad) => (
+              <motion.div
+                key={squad.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="rounded-xl border border-stone-800/80 bg-stone-900/30 p-6 sm:p-8"
+              >
+                <h3 className="text-2xl font-bold font-stencil text-center text-grom-olive-light mb-8 uppercase tracking-[0.2em]">
+                  {squad.title}
+                </h3>
+                <div className="flex flex-wrap justify-center gap-8">
+                  {squad.rows.map(({ duty, member, specialty }) => (
+                    <div key={`${member.callsign}-${duty}`} className="w-full max-w-[280px]">
+                      <SoldierCard {...member} duty={duty} specialty={specialty} />
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex flex-col items-center border-t border-stone-800/80 pt-12"
+          >
+            <div className="w-full max-w-xs">
+              <SoldierCard {...technician} duty="Техник" />
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -162,6 +240,39 @@ const Home = () => {
 
       {/* Contact Modal */}
       <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
+      {/* QR Code Modal */}
+      <AnimatePresence>
+        {isQrOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+            onClick={() => setIsQrOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative bg-stone-900 border border-stone-700 rounded-lg p-8 max-w-sm mx-4 text-center"
+            >
+              <button
+                onClick={() => setIsQrOpen(false)}
+                className="absolute top-3 right-3 text-stone-400 hover:text-white transition-colors"
+              >
+                <X size={20} />
+              </button>
+              <h3 className="text-xl font-bold font-stencil text-white mb-4">QR-КОД</h3>
+              <div className="bg-white rounded-lg p-4 inline-block mb-4">
+                <img src={asset('/qr-code.png')} alt="QR-код" className="w-48 h-48 object-contain" />
+              </div>
+              <p className="text-sm text-stone-400">Отсканируйте для быстрого доступа</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

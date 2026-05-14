@@ -90,26 +90,29 @@ export const mortarman: TeamMember = {
   image: asset('/avatars/shuga2.png'),
 };
 
-/** Главная: командир, звенья (замы + старшины), техник */
+/** Главная: командир, звенья (замы + старшины), техник — duty = должность, specialty = специальность */
 export const homeSquads: {
   title: string;
-  rows: { duty: string; member: TeamMember }[];
+  rows: { duty: string; member: TeamMember; specialty: string }[];
 }[] = [
   {
     title: '1 звено',
     rows: [
-      { duty: 'Заместитель командира', member: deputySquad1 },
-      { duty: 'Старшина', member: squad1Sergeant },
+      { duty: 'Заместитель командира', member: deputySquad1, specialty: 'Марксман' },
+      { duty: 'Старшина', member: squad1Sergeant, specialty: 'Снайпер' },
     ],
   },
   {
     title: '2 звено',
     rows: [
-      { duty: 'Заместитель командира', member: deputySquad2 },
-      { duty: 'Старшина', member: squad2Sergeant },
+      { duty: 'Заместитель командира', member: deputySquad2, specialty: 'Сапёр' },
+      { duty: 'Старшина', member: squad2Sergeant, specialty: 'Штурмовик' },
     ],
   },
 ];
+
+/** Специальность для карточки командира на главной (должность — «Командир» на карточке) */
+export const commanderSpecialtyHome = 'Штурмовик';
 
 /** Страница «Команда»: 2 отделения → специалисты → новобранцы */
 export const teamSquad1Slots: TeamSlot[] = [
