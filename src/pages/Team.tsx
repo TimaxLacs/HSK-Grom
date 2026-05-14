@@ -5,9 +5,9 @@ import { asset } from '../utils/asset';
 import {
   mortarman,
   radioman,
-  teamRecruits,
-  teamSquad1,
-  teamSquad2,
+  teamRecruitSlots,
+  teamSquad1Slots,
+  teamSquad2Slots,
 } from '../data/teamRoster';
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
@@ -17,14 +17,11 @@ const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-const SubTitle = ({ children }: { children: React.ReactNode }) => (
-  <h3 className="text-xl font-bold text-grom-olive-light border-b border-stone-800 pb-2 max-w-4xl mx-auto mb-6 text-center">
-    {children}
-  </h3>
-);
+const squadPanelTitleClass =
+  'text-2xl font-bold font-stencil text-center text-grom-olive-light mb-8 uppercase tracking-[0.2em]';
 
-const cardGridClass =
-  'flex flex-wrap justify-center gap-6 max-w-6xl mx-auto';
+const squadPanelBoxClass =
+  'rounded-xl border border-stone-800/80 bg-stone-900/30 p-6 sm:p-8';
 
 const Team = () => {
   return (
@@ -53,50 +50,64 @@ const Team = () => {
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
-        <section className="space-y-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 space-y-14">
+        <section>
           <SectionTitle>Основной состав</SectionTitle>
 
-          <div>
-            <SubTitle>1-е отделение</SubTitle>
-            <div className={cardGridClass}>
-              {teamSquad1.map((soldier, sIdx) => (
-                <div key={`s1-${soldier.callsign}-${sIdx}`} className="w-full sm:w-[calc(50%-12px)] md:w-[calc(33%-12px)] max-w-xs">
-                  <SoldierCard {...soldier} />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <SubTitle>2-е отделение</SubTitle>
-            <div className={cardGridClass}>
-              {teamSquad2.map((soldier, sIdx) => (
-                <div key={`s2-${soldier.callsign}-${sIdx}`} className="w-full sm:w-[calc(50%-12px)] md:w-[calc(33%-12px)] max-w-xs">
-                  <SoldierCard {...soldier} />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <SubTitle>Связист и миномётчик</SubTitle>
-            <div className="flex flex-wrap justify-center gap-6 max-w-3xl mx-auto">
-              <div className="w-full sm:w-[calc(50%-12px)] max-w-xs">
-                <SoldierCard {...radioman} duty="Связист" />
+          <div className="grid md:grid-cols-2 gap-10 lg:gap-16 max-w-5xl mx-auto">
+            <div className={squadPanelBoxClass}>
+              <h3 className={squadPanelTitleClass}>1-е отделение</h3>
+              <div className="flex flex-wrap justify-center gap-8">
+                {teamSquad1Slots.map(({ member, specialty }) => (
+                  <div key={member.callsign} className="w-full max-w-[280px]">
+                    <SoldierCard {...member} duty={specialty} />
+                  </div>
+                ))}
               </div>
-              <div className="w-full sm:w-[calc(50%-12px)] max-w-xs">
-                <SoldierCard {...mortarman} duty="Миномётчик" />
+            </div>
+
+            <div className={squadPanelBoxClass}>
+              <h3 className={squadPanelTitleClass}>2-е отделение</h3>
+              <div className="flex flex-wrap justify-center gap-8">
+                {teamSquad2Slots.map(({ member, specialty }) => (
+                  <div key={member.callsign} className="w-full max-w-[280px]">
+                    <SoldierCard {...member} duty={specialty} />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
+        </section>
 
-          <div>
-            <SubTitle>Новобранцы</SubTitle>
-            <div className={cardGridClass}>
-              {teamRecruits.map((soldier, sIdx) => (
-                <div key={`r-${soldier.callsign}-${sIdx}`} className="w-full sm:w-[calc(50%-12px)] md:w-[calc(33%-12px)] max-w-xs">
-                  <SoldierCard {...soldier} duty="Новобранец" />
+        <section>
+          <div className="grid md:grid-cols-2 gap-10 lg:gap-16 max-w-5xl mx-auto">
+            <div className={squadPanelBoxClass}>
+              <h3 className={squadPanelTitleClass}>Связист</h3>
+              <div className="flex flex-wrap justify-center gap-8">
+                <div className="w-full max-w-[280px]">
+                  <SoldierCard {...radioman} duty="Связист" />
+                </div>
+              </div>
+            </div>
+
+            <div className={squadPanelBoxClass}>
+              <h3 className={squadPanelTitleClass}>Миномётчик</h3>
+              <div className="flex flex-wrap justify-center gap-8">
+                <div className="w-full max-w-[280px]">
+                  <SoldierCard {...mortarman} duty="Миномётчик" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div className={`${squadPanelBoxClass} max-w-6xl mx-auto`}>
+            <h3 className={squadPanelTitleClass}>Новобранцы</h3>
+            <div className="flex flex-wrap justify-center gap-8">
+              {teamRecruitSlots.map(({ member, specialty }) => (
+                <div key={member.callsign} className="w-full max-w-[280px]">
+                  <SoldierCard {...member} duty={specialty} />
                 </div>
               ))}
             </div>

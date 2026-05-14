@@ -6,6 +6,12 @@ export type TeamMember = {
   image: string;
 };
 
+/** Карточка в составе с подписью специальности */
+export type TeamSlot = {
+  member: TeamMember;
+  specialty: string;
+};
+
 export const commander: TeamMember = {
   name: 'Максим Горм',
   callsign: 'Лихо',
@@ -106,21 +112,31 @@ export const homeSquads: {
 ];
 
 /** Страница «Команда»: 2 отделения → специалисты → новобранцы */
-export const teamSquad1: TeamMember[] = [
-  commander,
-  deputySquad1,
-  squad1Sergeant,
-  polsha,
-  goblin,
-  demon,
+export const teamSquad1Slots: TeamSlot[] = [
+  { member: commander, specialty: 'Командир' },
+  { member: deputySquad1, specialty: 'Марксман' },
+  { member: squad1Sergeant, specialty: 'Снайпер' },
+  { member: polsha, specialty: 'Медик' },
+  { member: goblin, specialty: 'Пулемётчик' },
 ];
 
-export const teamSquad2: TeamMember[] = [deputySquad2, squad2Sergeant, muravey, valka];
+export const teamSquad2Slots: TeamSlot[] = [
+  { member: deputySquad2, specialty: 'Сапёр' },
+  { member: squad2Sergeant, specialty: 'Штурмовик' },
+  { member: muravey, specialty: 'Гранатомётчик' },
+  { member: valka, specialty: 'Медик' },
+  { member: demon, specialty: 'Штурмовик' },
+];
 
-export const teamRecruits: TeamMember[] = [
+const recruitMembers: TeamMember[] = [
   { name: 'Андрей Жданов', callsign: 'Штиль', image: asset('/avatars/shtil.png') },
   { name: 'Максим Василенко', callsign: 'Овод', image: asset('/avatars/injir.png') },
   { name: 'Екатерина Крамскова', callsign: 'Кэт', image: asset('/avatars/ket.png') },
   { name: 'Владимир Степанов', callsign: 'Радар', image: asset('/avatars/radar.png') },
   { name: 'Юрий Игнатев', callsign: 'Матрос', image: asset('/avatars/matros.png') },
 ];
+
+export const teamRecruitSlots: TeamSlot[] = recruitMembers.map((member) => ({
+  member,
+  specialty: 'Новобранец',
+}));
