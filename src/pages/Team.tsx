@@ -8,6 +8,8 @@ import {
   teamRecruitSlots,
   teamSquad1Slots,
   teamSquad2Slots,
+  teamZvenoRowSpecialtyOrder,
+  type TeamSlot,
 } from '../data/teamRoster';
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
@@ -18,13 +20,39 @@ const SectionTitle = ({ children }: { children: React.ReactNode }) => (
 );
 
 const squadPanelTitleClass =
-  'text-2xl font-bold font-stencil text-center text-grom-olive-light mb-8 uppercase tracking-[0.2em]';
+  'text-xl sm:text-2xl font-bold font-stencil text-center text-grom-olive-light uppercase tracking-[0.2em]';
 
 const squadPanelBoxClass =
-  'rounded-xl border border-stone-800/80 bg-stone-900/30 p-6 sm:p-8';
+  'rounded-xl border border-stone-800/80 bg-stone-900/30 p-4 sm:p-6 md:p-8';
 
 const specialtySubClass =
-  'text-sm font-semibold uppercase tracking-[0.2em] text-stone-400 mb-4 text-center';
+  'text-xs sm:text-sm font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-stone-400 text-center';
+
+const slotsForSpecialty = (slots: TeamSlot[], specialty: string) =>
+  slots.filter((s) => s.specialty === specialty);
+
+const EmptyRolePlaceholder = () => (
+  <div
+    className="w-full max-w-[280px] mx-auto rounded-lg overflow-hidden border border-dashed border-stone-600 bg-stone-900/50 aspect-[3/4] flex items-center justify-center"
+    aria-hidden
+  >
+    <span className="text-stone-600 text-6xl font-stencil leading-none select-none">?</span>
+  </div>
+);
+
+const ZvenoColumn = ({ slots }: { slots: TeamSlot[] }) => (
+  <div className="flex flex-col items-center justify-start gap-6 min-h-[1rem]">
+    {slots.length === 0 ? (
+      <EmptyRolePlaceholder />
+    ) : (
+      slots.map((slot) => (
+        <div key={`${slot.member.callsign}-${slot.duty ?? ''}`} className="w-full max-w-[280px] shrink-0">
+          <SoldierCard {...slot.member} duty={slot.duty} />
+        </div>
+      ))
+    )}
+  </div>
+);
 
 const Team = () => {
   return (
@@ -57,71 +85,26 @@ const Team = () => {
         <section>
           <SectionTitle>Основной состав</SectionTitle>
 
-          {/* Десктоп: две колонки, строки синхронны по высоте */}
-          <div
-            className={`hidden md:block ${squadPanelBoxClass} max-w-6xl mx-auto`}
-          >
-            <div className="grid grid-cols-2 gap-x-10 lg:gap-x-14 gap-y-12">
-              <h3 className={`${squadPanelTitleClass} col-start-1 mb-0`}>1-е отделение</h3>
-              <h3 className={`${squadPanelTitleClass} col-start-2 mb-0`}>2-е отделение</h3>
+          <div className={`${squadPanelBoxClass} max-w-6xl mx-auto`}>
+            <div className="grid grid-cols-2 gap-3 sm:gap-6 md:gap-x-10 lg:gap-x-14 mb-10 sm:mb-12">
+              <h3 className={`${squadPanelTitleClass} mb-0`}>1 звено</h3>
+              <h3 className={`${squadPanelTitleClass} mb-0`}>2 звено</h3>
+            </div>
 
-              {teamSquad1Slots.map((slot1, index) => {
-                const slot2 = teamSquad2Slots[index];
+            <div className="flex flex-col gap-12 sm:gap-14 md:gap-16">
+              {teamZvenoRowSpecialtyOrder.map((specialty) => {
+                const s1 = slotsForSpecialty(teamSquad1Slots, specialty);
+                const s2 = slotsForSpecialty(teamSquad2Slots, specialty);
                 return (
-                  <React.Fragment key={`row-${slot1.member.callsign}-${slot2.member.callsign}`}>
-                    <div className="flex flex-col items-stretch">
-                      <h4 className={specialtySubClass}>{slot1.specialty}</h4>
-                      <div className="flex justify-center flex-1 min-h-0">
-                        <div className="w-full max-w-[280px]">
-                          <SoldierCard {...slot1.member} duty={slot1.duty} />
-                        </div>
-                      </div>
+                  <div key={specialty} className="grid grid-cols-1 gap-4">
+                    <h4 className={`${specialtySubClass} mb-2 sm:mb-3`}>{specialty}</h4>
+                    <div className="grid grid-cols-2 gap-3 sm:gap-6 md:gap-x-10 lg:gap-x-14 items-start">
+                      <ZvenoColumn slots={s1} />
+                      <ZvenoColumn slots={s2} />
                     </div>
-                    <div className="flex flex-col items-stretch">
-                      <h4 className={specialtySubClass}>{slot2.specialty}</h4>
-                      <div className="flex justify-center flex-1 min-h-0">
-                        <div className="w-full max-w-[280px]">
-                          <SoldierCard {...slot2.member} duty={slot2.duty} />
-                        </div>
-                      </div>
-                    </div>
-                  </React.Fragment>
+                  </div>
                 );
               })}
-            </div>
-          </div>
-
-          {/* Мобильные: отделения столбиком, подзаголовки специальностей */}
-          <div className="md:hidden space-y-10 max-w-lg mx-auto">
-            <div className={squadPanelBoxClass}>
-              <h3 className={squadPanelTitleClass}>1-е отделение</h3>
-              <div className="space-y-10">
-                {teamSquad1Slots.map((slot) => (
-                  <div key={slot.member.callsign}>
-                    <h4 className={specialtySubClass}>{slot.specialty}</h4>
-                    <div className="flex justify-center">
-                      <div className="w-full max-w-[280px]">
-                        <SoldierCard {...slot.member} duty={slot.duty} />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className={squadPanelBoxClass}>
-              <h3 className={squadPanelTitleClass}>2-е отделение</h3>
-              <div className="space-y-10">
-                {teamSquad2Slots.map((slot) => (
-                  <div key={slot.member.callsign}>
-                    <h4 className={specialtySubClass}>{slot.specialty}</h4>
-                    <div className="flex justify-center">
-                      <div className="w-full max-w-[280px]">
-                        <SoldierCard {...slot.member} duty={slot.duty} />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </section>
@@ -135,7 +118,7 @@ const Team = () => {
           </div>
           <div className="grid md:grid-cols-2 gap-10 lg:gap-16 max-w-5xl mx-auto items-stretch">
             <div className={`${squadPanelBoxClass} flex flex-col h-full`}>
-              <h3 className={squadPanelTitleClass}>Связист</h3>
+              <h3 className={`${squadPanelTitleClass} mb-8`}>Связист</h3>
               <div className="flex flex-1 flex-wrap justify-center items-center gap-8">
                 <div className="w-full max-w-[280px]">
                   <SoldierCard {...radioman} duty="Связист" />
@@ -144,7 +127,7 @@ const Team = () => {
             </div>
 
             <div className={`${squadPanelBoxClass} flex flex-col h-full`}>
-              <h3 className={squadPanelTitleClass}>Миномётчик</h3>
+              <h3 className={`${squadPanelTitleClass} mb-8`}>Миномётчик</h3>
               <div className="flex flex-1 flex-wrap justify-center items-center gap-8">
                 <div className="w-full max-w-[280px]">
                   <SoldierCard {...mortarman} duty="Миномётчик" />
@@ -156,7 +139,7 @@ const Team = () => {
 
         <section>
           <div className={`${squadPanelBoxClass} max-w-6xl mx-auto`}>
-            <h3 className={squadPanelTitleClass}>Новобранцы</h3>
+            <h3 className={`${squadPanelTitleClass} mb-8`}>Новобранцы</h3>
             <div className="flex flex-wrap justify-center gap-8">
               {teamRecruitSlots.map(({ member, duty }) => (
                 <div key={member.callsign} className="w-full max-w-[280px]">

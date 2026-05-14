@@ -115,7 +115,7 @@ export const homeSquads: {
 /** Специальность для карточки командира на главной (должность — «Командир» на карточке) */
 export const commanderSpecialtyHome = 'Штурмовик';
 
-/** Страница «Команда»: 2 отделения → специалисты → новобранцы */
+/** Страница «Команда»: звенья по специальностям в строках */
 export const teamSquad1Slots: TeamSlot[] = [
   { member: commander, specialty: 'Штурмовик', duty: 'Командир' },
   { member: deputySquad1, specialty: 'Марксман', duty: 'Замком' },
@@ -130,6 +130,17 @@ export const teamSquad2Slots: TeamSlot[] = [
   { member: muravey, specialty: 'Гранатомётчик' },
   { member: valka, specialty: 'Медик' },
   { member: demon, specialty: 'Штурмовик' },
+];
+
+/** Порядок строк на странице «Команда»: в каждой строке колонки 1 звено | 2 звено */
+export const teamZvenoRowSpecialtyOrder: string[] = [
+  'Марксман',
+  'Снайпер',
+  'Пулемётчик',
+  'Гранатомётчик',
+  'Медик',
+  'Сапёр',
+  'Штурмовик',
 ];
 
 const recruitShitil: TeamMember = {
