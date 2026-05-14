@@ -160,9 +160,9 @@ const recruitMatros: TeamMember = {
 
 /** duty — составная подпись на карточке новобранца */
 export const teamRecruitSlots: { member: TeamMember; duty: string }[] = [
-  { member: recruitShitil, duty: 'Новобранец-сапёр' },
-  { member: recruitOvod, duty: 'Новобранец-штурмовик' },
-  { member: recruitKet, duty: 'Новобранец-медик' },
-  { member: recruitRadar, duty: 'Новобранец-связист' },
-  { member: recruitMatros, duty: 'Новобранец-снайпер' },
+  { member: recruitShitil, duty: 'Новобранец-штурмовик' },
+  { member: recruitOvod, duty: 'Новобранец-сапёр' },
+  { member: recruitKet, duty: 'Новобранец-штурмовик' },
+  { member: recruitRadar, duty: 'Новобранец-гранатомётчик' },
+  { member: recruitMatros, duty: 'Новобранец-штурмовик' },
 ];
