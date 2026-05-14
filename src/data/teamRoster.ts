@@ -134,13 +134,13 @@ export const teamSquad2Slots: TeamSlot[] = [
 
 /** Порядок строк на странице «Команда»: в каждой строке колонки 1 звено | 2 звено */
 export const teamZvenoRowSpecialtyOrder: string[] = [
-  'Марксман',
-  'Снайпер',
+  'Штурмовик',
   'Пулемётчик',
   'Гранатомётчик',
-  'Медик',
+  'Марксман',
+  'Снайпер',
   'Сапёр',
-  'Штурмовик',
+  'Медик',
 ];
 
 const recruitShitil: TeamMember = {
