@@ -127,6 +127,12 @@ const Team = () => {
         </section>
 
         <section>
+          <div className="text-center mb-10 max-w-5xl mx-auto">
+            <h3 className="text-lg sm:text-xl font-bold font-stencil text-stone-400 uppercase tracking-[0.25em] mb-3">
+              Вспомогательное подразделение
+            </h3>
+            <div className="w-16 h-0.5 bg-grom-olive/70 mx-auto" />
+          </div>
           <div className="grid md:grid-cols-2 gap-10 lg:gap-16 max-w-5xl mx-auto items-stretch">
             <div className={`${squadPanelBoxClass} flex flex-col h-full`}>
               <h3 className={squadPanelTitleClass}>Связист</h3>
