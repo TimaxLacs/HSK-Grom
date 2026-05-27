@@ -168,6 +168,11 @@ const recruitMatros: TeamMember = {
   callsign: 'Матрос',
   image: asset('/avatars/matros.png'),
 };
+const recruitYozhik: TeamMember = {
+  name: 'Александр Бровкин',
+  callsign: 'Ёжик',
+  image: asset('/avatars/yozhik.png'),
+};
 
 /** duty — составная подпись на карточке новобранца */
 export const teamRecruitSlots: { member: TeamMember; duty: string }[] = [
@@ -176,4 +181,5 @@ export const teamRecruitSlots: { member: TeamMember; duty: string }[] = [
   { member: recruitKet, duty: 'Новобранец-штурмовик' },
   { member: recruitRadar, duty: 'Новобранец-штурмовик' },
   { member: recruitMatros, duty: 'Новобранец-штурмовик' },
+  { member: recruitYozhik, duty: 'Новобранец-штурмовик' },
 ];
