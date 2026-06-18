@@ -43,11 +43,13 @@ export const squad1Sergeant: TeamMember = {
   image: asset('/avatars/shershen2.png'),
 };
 
-export const squad2Sergeant: TeamMember = {
+export const afgan: TeamMember = {
   name: 'Илья Грабовский',
   callsign: 'Афган',
   image: asset('/avatars/afgan3.png'),
 };
+
+export const squad2Sergeant = afgan;
 
 export const polsha: TeamMember = {
   name: 'Максим Полик',
@@ -79,11 +81,25 @@ export const demon: TeamMember = {
   image: asset('/avatars/demon.png'),
 };
 
-export const radioman: TeamMember = {
+export const radar: TeamMember = {
+  name: 'Владимир Степанов',
+  callsign: 'Радар',
+  image: asset('/avatars/radar.png'),
+};
+
+export const matros: TeamMember = {
+  name: 'Юрий Игнатев',
+  callsign: 'Матрос',
+  image: asset('/avatars/matros.png'),
+};
+
+export const molchun: TeamMember = {
   name: 'Алексей Петухов',
   callsign: 'Молчун',
   image: asset('/avatars/molchun2.png'),
 };
+
+export const radioman = molchun;
 
 export const mortarman: TeamMember = {
   name: 'Алексей Борис',
@@ -105,10 +121,7 @@ export const homeSquads: {
   },
   {
     title: '2 звено',
-    rows: [
-      { duty: 'Заместитель командира', member: deputySquad2, specialty: 'Сапёр' },
-      { duty: 'Старшина', member: squad2Sergeant, specialty: 'Штурмовик' },
-    ],
+    rows: [{ duty: 'Заместитель командира', member: deputySquad2, specialty: 'Сапёр' }],
   },
 ];
 
@@ -122,14 +135,17 @@ export const teamSquad1Slots: TeamSlot[] = [
   { member: squad1Sergeant, specialty: 'Снайпер', duty: 'Старшина' },
   { member: polsha, specialty: 'Медик' },
   { member: goblin, specialty: 'Пулемётчик' },
+  { member: radar, specialty: 'Связист' },
 ];
 
 export const teamSquad2Slots: TeamSlot[] = [
   { member: deputySquad2, specialty: 'Сапёр', duty: 'Замком' },
-  { member: squad2Sergeant, specialty: 'Штурмовик', duty: 'Старшина' },
+  { member: afgan, specialty: 'Штурмовик' },
   { member: muravey, specialty: 'Гранатомётчик' },
   { member: valka, specialty: 'Медик' },
   { member: demon, specialty: 'Штурмовик' },
+  { member: matros, specialty: 'Штурмовик' },
+  { member: molchun, specialty: 'Связист' },
 ];
 
 /** Порядок строк на странице «Команда»: в каждой строке колонки 1 звено | 2 звено */
@@ -140,6 +156,7 @@ export const teamZvenoRowSpecialtyOrder: string[] = [
   'Марксман',
   'Снайпер',
   'Сапёр',
+  'Связист',
   'Медик',
 ];
 
@@ -157,16 +174,6 @@ const recruitKet: TeamMember = {
   name: 'Екатерина Крамскова',
   callsign: 'Кэт',
   image: asset('/avatars/ket.png'),
-};
-const recruitRadar: TeamMember = {
-  name: 'Владимир Степанов',
-  callsign: 'Радар',
-  image: asset('/avatars/radar.png'),
-};
-const recruitMatros: TeamMember = {
-  name: 'Юрий Игнатев',
-  callsign: 'Матрос',
-  image: asset('/avatars/matros.png'),
 };
 const recruitYozhik: TeamMember = {
   name: 'Александр Бровкин',
@@ -188,9 +195,7 @@ const recruitSkinuha: TeamMember = {
 export const teamRecruitSlots: { member: TeamMember; duty: string }[] = [
   { member: recruitShitil, duty: 'Новобранец-гранатомётчик' },
   { member: recruitOvod, duty: 'Новобранец-сапёр' },
-  { member: recruitKet, duty: 'Новобранец-штурмовик' },
-  { member: recruitRadar, duty: 'Новобранец-штурмовик' },
-  { member: recruitMatros, duty: 'Новобранец-штурмовик' },
+  { member: recruitKet, duty: 'Новобранец-марксман' },
   { member: recruitYozhik, duty: 'Новобранец-штурмовик' },
   { member: recruitMaloy, duty: 'Новобранец-штурмовик' },
   { member: recruitSkinuha, duty: 'Новобранец-штурмовик' },

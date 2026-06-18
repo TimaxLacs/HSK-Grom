@@ -4,7 +4,6 @@ import SoldierCard from '../components/SoldierCard';
 import { asset } from '../utils/asset';
 import {
   mortarman,
-  radioman,
   teamRecruitSlots,
   teamSquad1Slots,
   teamSquad2Slots,
@@ -110,28 +109,11 @@ const Team = () => {
         </section>
 
         <section>
-          <div className="text-center mb-10 max-w-5xl mx-auto">
-            <h3 className="text-lg sm:text-xl font-bold font-stencil text-stone-400 uppercase tracking-[0.25em] mb-3">
-              Вспомогательное подразделение
-            </h3>
-            <div className="w-16 h-0.5 bg-grom-olive/70 mx-auto" />
-          </div>
-          <div className="grid md:grid-cols-2 gap-10 lg:gap-16 max-w-5xl mx-auto items-stretch">
-            <div className={`${squadPanelBoxClass} flex flex-col h-full`}>
-              <h3 className={`${squadPanelTitleClass} mb-8`}>Связист</h3>
-              <div className="flex flex-1 flex-wrap justify-center items-center gap-8">
-                <div className="w-full max-w-[280px]">
-                  <SoldierCard {...radioman} duty="Связист" />
-                </div>
-              </div>
-            </div>
-
-            <div className={`${squadPanelBoxClass} flex flex-col h-full`}>
-              <h3 className={`${squadPanelTitleClass} mb-8`}>Миномётчик</h3>
-              <div className="flex flex-1 flex-wrap justify-center items-center gap-8">
-                <div className="w-full max-w-[280px]">
-                  <SoldierCard {...mortarman} duty="Миномётчик" />
-                </div>
+          <div className={`${squadPanelBoxClass} max-w-lg mx-auto`}>
+            <h3 className={`${squadPanelTitleClass} mb-8`}>Миномётчик</h3>
+            <div className="flex justify-center">
+              <div className="w-full max-w-[280px]">
+                <SoldierCard {...mortarman} duty="Миномётчик" />
               </div>
             </div>
           </div>

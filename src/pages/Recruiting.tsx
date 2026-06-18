@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, ArrowRight, AlertTriangle } from 'lucide-react';
 import ContactModal from '../components/ContactModal';
+import { asset } from '../utils/asset';
 
 const Recruiting = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const requirements = [
-    'Возраст строго от 18 лет.',
+    'Возраст от 16 лет.',
     'Адекватность и соблюдение субординации.',
-    'Финансовая независимость (покупка снаряжения, взносы).',
+    'Возможность постепенной покупки снаряжения, сдачи взносов.',
+    'Покупка снаряжения только после уточнения с командным составом.',
     'Готовность посещать тренировки минимум 2 раза в месяц.',
     'Отсутствие медицинских противопоказаний к физическим нагрузкам.',
     'Желание работать в команде, а не "фрагать" в одиночку.',
@@ -20,7 +22,7 @@ const Recruiting = () => {
       {/* Header */}
       <section className="relative h-[40vh] md:h-[50vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-black/60 z-10" />
-        <div className="absolute inset-0 bg-[url('/team-winter.jpg')] bg-cover bg-center opacity-70 animate-kenburns" />
+        <div className="absolute inset-0 bg-cover bg-center opacity-70 animate-kenburns" style={{backgroundImage: `url(${asset('/team-winter.jpg')})`}} />
         
         <div className="relative z-20 text-center px-4">
           <motion.h1 
@@ -43,14 +45,19 @@ const Recruiting = () => {
         
         {/* Intro */}
         <div className="bg-stone-900 rounded-lg p-8 shadow-2xl border border-stone-800 mb-12">
-          <h2 className="text-2xl font-bold font-stencil text-white mb-4">ВСТУПЛЕНИЕ В ЧСК ГРОМ</h2>
+          <h2 className="text-2xl font-bold font-stencil text-white mb-4">ВСТУПЛЕНИЕ В ЧСК «ГРОМ»</h2>
           <p className="text-stone-300 leading-relaxed mb-4">
             Мы постоянно ищем новых бойцов, готовых стать частью нашего коллектива. 
-            Если ты ищешь серьезный подход к страйкболу, регулярные тренировки и настоящую командную игру — тебе к нам.
+            Если ты ищешь серьёзный подход к страйкболу, регулярные тренировки и настоящую командную игру — тебе к нам.
+          </p>
+          <p className="text-stone-300 leading-relaxed mb-4">
+            Помимо проведения игр и тренировок, в группе команды размещаются учебные материалы по: огневой, инженерной, тактической, медицинской подготовкам, а также основы ориентирования и военная топография в целом.
+          </p>
+          <p className="text-stone-300 leading-relaxed mb-4">
+            С целью поддержания дисциплины и сплочения команды, бойцы используют единообразное снаряжение и носят экипировку в расцветке «мультикам».
           </p>
           <p className="text-stone-300 leading-relaxed">
-            Мы не требуем от тебя быть спецназовцем прямо сейчас. Мы научим всему, что знаем сами. 
-            Главное — твое желание и упорство.
+            Помимо этого, в команде действует приоритет специальностей, занимаемых бойцами основного состава.
           </p>
         </div>
 
@@ -75,10 +82,10 @@ const Recruiting = () => {
             <div className="bg-stone-900/50 p-6 rounded-lg border-l-4 border-blue-600">
               <h3 className="text-xl font-bold text-white mb-4 flex items-center">
                 <AlertTriangle className="w-6 h-6 text-blue-500 mr-2" />
-                ИСЧИТАТЕЛЬНЫЙ СРОК
+                ИСПЫТАТЕЛЬНЫЙ СРОК
               </h3>
               <p className="text-stone-400 text-sm mb-4">
-                Каждый кандидат проходит испытательный срок (обычно 2-3 месяца). 
+                Каждый кандидат проходит испытательный срок (обычно 1 месяц).
                 За это время мы смотрим на твою адекватность, посещаемость и обучаемость.
               </p>
               <p className="text-stone-400 text-sm">
