@@ -137,7 +137,6 @@ export const teamSquad1Slots: TeamSlot[] = [
   { member: polsha, specialty: 'Медик' },
   { member: goblin, specialty: 'Пулемётчик' },
   { member: radar, specialty: 'Связист' },
-  { member: mortarman, specialty: 'Миномётчик' },
 ];
 
 export const teamSquad2Slots: TeamSlot[] = [
@@ -154,7 +153,6 @@ export const teamZvenoRowSpecialtyOrder: string[] = [
   'Штурмовик',
   'Пулемётчик',
   'Гранатомётчик',
-  'Миномётчик',
   'Марксман',
   'Снайпер',
   'Сапёр',
