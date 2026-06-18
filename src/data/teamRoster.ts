@@ -131,6 +131,7 @@ export const commanderSpecialtyHome = 'Штурмовик';
 /** Страница «Команда»: звенья по специальностям в строках */
 export const teamSquad1Slots: TeamSlot[] = [
   { member: commander, specialty: 'Штурмовик', duty: 'Командир' },
+  { member: matros, specialty: 'Штурмовик' },
   { member: deputySquad1, specialty: 'Марксман', duty: 'Замком' },
   { member: squad1Sergeant, specialty: 'Снайпер', duty: 'Старшина' },
   { member: polsha, specialty: 'Медик' },
@@ -145,7 +146,6 @@ export const teamSquad2Slots: TeamSlot[] = [
   { member: muravey, specialty: 'Гранатомётчик' },
   { member: valka, specialty: 'Медик' },
   { member: demon, specialty: 'Штурмовик' },
-  { member: matros, specialty: 'Штурмовик' },
   { member: molchun, specialty: 'Связист' },
 ];
 
@@ -200,5 +200,5 @@ export const teamRecruitSlots: { member: TeamMember; duty: string }[] = [
   { member: recruitKet, duty: 'Новобранец-марксман' },
   { member: recruitYozhik, duty: 'Новобранец-штурмовик' },
   { member: recruitMaloy, duty: 'Новобранец-штурмовик' },
-  { member: recruitSkinuha, duty: 'Новобранец-штурмовик' },
+  { member: recruitSkinuha, duty: 'Новобранец-оператор БПЛА' },
 ];
