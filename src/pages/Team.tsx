@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import SoldierCard from '../components/SoldierCard';
 import { asset } from '../utils/asset';
 import {
-  mortarman,
   teamRecruitSlots,
   teamSquad1Slots,
   teamSquad2Slots,
@@ -104,17 +103,6 @@ const Team = () => {
                   </div>
                 );
               })}
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <div className={`${squadPanelBoxClass} max-w-lg mx-auto`}>
-            <h3 className={`${squadPanelTitleClass} mb-8`}>Миномётчик</h3>
-            <div className="flex justify-center">
-              <div className="w-full max-w-[280px]">
-                <SoldierCard {...mortarman} duty="Миномётчик" />
-              </div>
             </div>
           </div>
         </section>
