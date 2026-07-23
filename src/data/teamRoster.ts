@@ -43,13 +43,11 @@ export const squad1Sergeant: TeamMember = {
   image: asset('/avatars/shershen2.png'),
 };
 
-export const afgan: TeamMember = {
-  name: 'Илья Грабовский',
-  callsign: 'Афган',
-  image: asset('/avatars/afgan3.png'),
+export const squad2Sergeant: TeamMember = {
+  name: 'Александр Бровкин',
+  callsign: 'Ёжик',
+  image: asset('/avatars/yozhik.png'),
 };
-
-export const squad2Sergeant = afgan;
 
 export const polsha: TeamMember = {
   name: 'Максим Полик',
@@ -107,6 +105,20 @@ export const mortarman: TeamMember = {
   image: asset('/avatars/shuga2.png'),
 };
 
+export const ovod: TeamMember = {
+  name: 'Максим Василенко',
+  callsign: 'Овод',
+  image: asset('/avatars/injir.png'),
+};
+
+export const yozhik = squad2Sergeant;
+
+export const ket: TeamMember = {
+  name: 'Екатерина Крамскова',
+  callsign: 'Кэт',
+  image: asset('/avatars/ket.png'),
+};
+
 /** Главная: командир, звенья (замы + старшины), техник — duty = должность, specialty = специальность */
 export const homeSquads: {
   title: string;
@@ -121,7 +133,10 @@ export const homeSquads: {
   },
   {
     title: '2 звено',
-    rows: [{ duty: 'Заместитель командира', member: deputySquad2, specialty: 'Сапёр' }],
+    rows: [
+      { duty: 'Заместитель командира', member: deputySquad2, specialty: 'Сапёр' },
+      { duty: 'Старшина', member: squad2Sergeant, specialty: 'Пулемётчик' },
+    ],
   },
 ];
 
@@ -136,15 +151,17 @@ export const teamSquad1Slots: TeamSlot[] = [
   { member: squad1Sergeant, specialty: 'Снайпер', duty: 'Старшина' },
   { member: polsha, specialty: 'Медик' },
   { member: goblin, specialty: 'Пулемётчик' },
+  { member: ovod, specialty: 'Сапёр' },
   { member: radar, specialty: 'Связист' },
 ];
 
 export const teamSquad2Slots: TeamSlot[] = [
   { member: deputySquad2, specialty: 'Сапёр', duty: 'Замком' },
-  { member: afgan, specialty: 'Штурмовик' },
-  { member: muravey, specialty: 'Гранатомётчик' },
-  { member: valka, specialty: 'Медик' },
+  { member: valka, specialty: 'Штурмовик' },
   { member: demon, specialty: 'Штурмовик' },
+  { member: squad2Sergeant, specialty: 'Пулемётчик', duty: 'Старшина' },
+  { member: muravey, specialty: 'Гранатомётчик' },
+  { member: ket, specialty: 'Медик', duty: 'Новобранец-медик' },
   { member: molchun, specialty: 'Связист' },
 ];
 
@@ -165,21 +182,6 @@ const recruitShitil: TeamMember = {
   callsign: 'Штиль',
   image: asset('/avatars/shtil.png'),
 };
-const recruitOvod: TeamMember = {
-  name: 'Максим Василенко',
-  callsign: 'Овод',
-  image: asset('/avatars/injir.png'),
-};
-const recruitKet: TeamMember = {
-  name: 'Екатерина Крамскова',
-  callsign: 'Кэт',
-  image: asset('/avatars/ket.png'),
-};
-const recruitYozhik: TeamMember = {
-  name: 'Александр Бровкин',
-  callsign: 'Ёжик',
-  image: asset('/avatars/yozhik.png'),
-};
 const recruitMaloy: TeamMember = {
   name: 'Сергей Бровкин',
   callsign: 'Малой',
@@ -190,13 +192,28 @@ const recruitSkinuha: TeamMember = {
   callsign: 'Скинуха',
   image: asset('/avatars/skinuha.png'),
 };
+const recruitKitana: TeamMember = {
+  name: 'Вероника Чудакова',
+  callsign: 'Китана',
+  image: asset('/avatars/kitana.png'),
+};
+const recruitBezPozivnogo: TeamMember = {
+  name: 'Юра Гейко',
+  callsign: 'Без позывного',
+  image: '',
+};
+const recruitRyzhiy: TeamMember = {
+  name: 'Степан Ласточкин',
+  callsign: 'Рыжий',
+  image: asset('/avatars/ryzhiy.png'),
+};
 
 /** duty — составная подпись на карточке новобранца */
 export const teamRecruitSlots: { member: TeamMember; duty: string }[] = [
   { member: recruitShitil, duty: 'Новобранец-гранатомётчик' },
-  { member: recruitOvod, duty: 'Новобранец-сапёр' },
-  { member: recruitKet, duty: 'Новобранец-марксман' },
-  { member: recruitYozhik, duty: 'Новобранец-штурмовик' },
   { member: recruitMaloy, duty: 'Новобранец-штурмовик' },
   { member: recruitSkinuha, duty: 'Новобранец-оператор БПЛА' },
+  { member: recruitKitana, duty: 'Новобранец-штурмовик' },
+  { member: recruitBezPozivnogo, duty: 'Новобранец-штурмовик' },
+  { member: recruitRyzhiy, duty: 'Новобранец-штурмовик' },
 ];
