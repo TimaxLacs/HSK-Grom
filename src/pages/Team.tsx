@@ -122,11 +122,11 @@ const Team = () => {
 
         <section>
           <div className={`${squadPanelBoxClass} max-w-6xl mx-auto`}>
-            <h3 className={`${squadPanelTitleClass} mb-8`}>Резерв</h3>
+            <h3 className={`${squadPanelTitleClass} mb-8`}>Новобранцы</h3>
             <div className="flex flex-wrap justify-center gap-8">
-              {teamReserveSlots.map(({ member, specialty }) => (
+              {teamRecruitSlots.map(({ member, duty }) => (
                 <div key={member.callsign} className="w-full max-w-[280px]">
-                  <SoldierCard {...member} duty={specialty} />
+                  <SoldierCard {...member} duty={duty} />
                 </div>
               ))}
             </div>
@@ -135,11 +135,11 @@ const Team = () => {
 
         <section>
           <div className={`${squadPanelBoxClass} max-w-6xl mx-auto`}>
-            <h3 className={`${squadPanelTitleClass} mb-8`}>Новобранцы</h3>
+            <h3 className={`${squadPanelTitleClass} mb-8`}>Резерв</h3>
             <div className="flex flex-wrap justify-center gap-8">
-              {teamRecruitSlots.map(({ member, duty }) => (
+              {teamReserveSlots.map(({ member, specialty }) => (
                 <div key={member.callsign} className="w-full max-w-[280px]">
-                  <SoldierCard {...member} duty={duty} />
+                  <SoldierCard {...member} duty={specialty} />
                 </div>
               ))}
             </div>

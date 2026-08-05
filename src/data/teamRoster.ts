@@ -182,7 +182,6 @@ export const teamZvenoRowSpecialtyOrder: string[] = [
 
 /** Резерв — вне основного состава звеньев */
 export const teamReserveSlots: TeamSlot[] = [
-  { member: susanin, specialty: '' },
   { member: valka, specialty: 'Штурмовик' },
   { member: muravey, specialty: 'Гранатомётчик' },
   { member: molchun, specialty: 'Связист' },
@@ -215,4 +214,5 @@ export const teamRecruitSlots: { member: TeamMember; duty: string }[] = [
   { member: recruitSkinuha, duty: 'Новобранец-оператор БПЛА' },
   { member: recruitGekon, duty: 'Новобранец-штурмовик' },
   { member: recruitRyzhiy, duty: 'Новобранец-штурмовик' },
+  { member: susanin, duty: 'Новобранец-штурмовик' },
 ];
