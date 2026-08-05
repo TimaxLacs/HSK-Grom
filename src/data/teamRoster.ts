@@ -119,6 +119,12 @@ export const ket: TeamMember = {
   image: asset('/avatars/ket.png'),
 };
 
+export const susanin: TeamMember = {
+  name: 'Сусанин',
+  callsign: 'Сусанин',
+  image: '',
+};
+
 /** Главная: командир, звенья (замы + старшины), техник — duty = должность, specialty = специальность */
 export const homeSquads: {
   title: string;
@@ -157,12 +163,9 @@ export const teamSquad1Slots: TeamSlot[] = [
 
 export const teamSquad2Slots: TeamSlot[] = [
   { member: deputySquad2, specialty: 'Сапёр', duty: 'Замком' },
-  { member: valka, specialty: 'Штурмовик' },
   { member: demon, specialty: 'Штурмовик' },
   { member: squad2Sergeant, specialty: 'Пулемётчик', duty: 'Старшина' },
-  { member: muravey, specialty: 'Гранатомётчик' },
   { member: ket, specialty: 'Медик', duty: 'Новобранец-медик' },
-  { member: molchun, specialty: 'Связист' },
 ];
 
 /** Порядок строк на странице «Команда»: в каждой строке колонки 1 звено | 2 звено */
@@ -177,11 +180,14 @@ export const teamZvenoRowSpecialtyOrder: string[] = [
   'Медик',
 ];
 
-const recruitShitil: TeamMember = {
-  name: 'Андрей Жданов',
-  callsign: 'Штиль',
-  image: asset('/avatars/shtil.png'),
-};
+/** Резерв — вне основного состава звеньев */
+export const teamReserveSlots: TeamSlot[] = [
+  { member: susanin, specialty: '' },
+  { member: valka, specialty: 'Штурмовик' },
+  { member: muravey, specialty: 'Гранатомётчик' },
+  { member: molchun, specialty: 'Связист' },
+];
+
 const recruitMaloy: TeamMember = {
   name: 'Сергей Бровкин',
   callsign: 'Малой',
@@ -192,14 +198,9 @@ const recruitSkinuha: TeamMember = {
   callsign: 'Скинуха',
   image: asset('/avatars/skinuha.png'),
 };
-const recruitKitana: TeamMember = {
-  name: 'Вероника Чудакова',
-  callsign: 'Китана',
-  image: asset('/avatars/kitana.png'),
-};
-const recruitBezPozivnogo: TeamMember = {
+const recruitGekon: TeamMember = {
   name: 'Юра Гейко',
-  callsign: 'Без позывного',
+  callsign: 'Гекон',
   image: '',
 };
 const recruitRyzhiy: TeamMember = {
@@ -210,10 +211,8 @@ const recruitRyzhiy: TeamMember = {
 
 /** duty — составная подпись на карточке новобранца */
 export const teamRecruitSlots: { member: TeamMember; duty: string }[] = [
-  { member: recruitShitil, duty: 'Новобранец-гранатомётчик' },
   { member: recruitMaloy, duty: 'Новобранец-штурмовик' },
   { member: recruitSkinuha, duty: 'Новобранец-оператор БПЛА' },
-  { member: recruitKitana, duty: 'Новобранец-штурмовик' },
-  { member: recruitBezPozivnogo, duty: 'Новобранец-штурмовик' },
+  { member: recruitGekon, duty: 'Новобранец-штурмовик' },
   { member: recruitRyzhiy, duty: 'Новобранец-штурмовик' },
 ];

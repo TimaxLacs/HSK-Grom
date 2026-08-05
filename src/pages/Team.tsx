@@ -3,7 +3,9 @@ import { motion } from 'framer-motion';
 import SoldierCard from '../components/SoldierCard';
 import { asset } from '../utils/asset';
 import {
+  mortarman,
   teamRecruitSlots,
+  teamReserveSlots,
   teamSquad1Slots,
   teamSquad2Slots,
   teamZvenoRowSpecialtyOrder,
@@ -103,6 +105,30 @@ const Team = () => {
                   </div>
                 );
               })}
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div className={`${squadPanelBoxClass} max-w-lg mx-auto`}>
+            <h3 className={`${squadPanelTitleClass} mb-8`}>Миномётчик</h3>
+            <div className="flex justify-center">
+              <div className="w-full max-w-[280px]">
+                <SoldierCard {...mortarman} duty="Миномётчик" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div className={`${squadPanelBoxClass} max-w-6xl mx-auto`}>
+            <h3 className={`${squadPanelTitleClass} mb-8`}>Резерв</h3>
+            <div className="flex flex-wrap justify-center gap-8">
+              {teamReserveSlots.map(({ member, specialty }) => (
+                <div key={member.callsign} className="w-full max-w-[280px]">
+                  <SoldierCard {...member} duty={specialty} />
+                </div>
+              ))}
             </div>
           </div>
         </section>
