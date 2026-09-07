@@ -1,26 +1,26 @@
+import { asset } from '../utils/asset';
+
 export const contacts = [
   {
     role: 'Командир',
     name: 'Максим Горм',
     callsign: 'Лихо',
-    phone: '+7 (XXX) XXX-XX-XX',
+    phone: '+7 (909) 583-45-67',
     social: 'vk.com/maximgorm',
-    image: '/avatars/likho.png',
+    image: asset('/avatars/likho.png'),
   },
   {
     role: 'Замком',
     name: 'Тимур Шакиров',
     callsign: 'Горизонт',
-    phone: '+7 (XXX) XXX-XX-XX',
     social: 'vk.com/timaxlax',
-    image: '/avatars/gorizont.png',
+    image: asset('/avatars/gorizont3.png'),
   },
   {
     role: 'Старшина',
     name: 'Денис Горбунов',
-    callsign: 'Ганза',
-    phone: '+7 (XXX) XXX-XX-XX',
+    callsign: 'Арчи',
     social: 'vk.com/denoson',
-    image: '/avatars/ganza.png',
+    image: asset('/avatars/ganza3.png'),
   },
 ];

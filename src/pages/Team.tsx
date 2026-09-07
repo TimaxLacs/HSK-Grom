@@ -9,6 +9,7 @@ import {
   teamSquad1Slots,
   teamSquad2Slots,
   teamZvenoRowSpecialtyOrder,
+  uavOperator,
   type TeamSlot,
 } from '../data/teamRoster';
 
@@ -110,11 +111,21 @@ const Team = () => {
         </section>
 
         <section>
-          <div className={`${squadPanelBoxClass} max-w-lg mx-auto`}>
-            <h3 className={`${squadPanelTitleClass} mb-8`}>Миномётчик</h3>
-            <div className="flex justify-center">
-              <div className="w-full max-w-[280px]">
-                <SoldierCard {...mortarman} duty="Миномётчик" />
+          <div className="grid md:grid-cols-2 gap-10 lg:gap-16 max-w-5xl mx-auto items-stretch">
+            <div className={`${squadPanelBoxClass} flex flex-col h-full`}>
+              <h3 className={`${squadPanelTitleClass} mb-8`}>Миномётчик</h3>
+              <div className="flex justify-center">
+                <div className="w-full max-w-[280px]">
+                  <SoldierCard {...mortarman} duty="Миномётчик" />
+                </div>
+              </div>
+            </div>
+            <div className={`${squadPanelBoxClass} flex flex-col h-full`}>
+              <h3 className={`${squadPanelTitleClass} mb-8`}>Оператор БПЛА</h3>
+              <div className="flex justify-center">
+                <div className="w-full max-w-[280px]">
+                  <SoldierCard {...uavOperator} duty="Оператор БПЛА" />
+                </div>
               </div>
             </div>
           </div>
@@ -125,7 +136,7 @@ const Team = () => {
             <h3 className={`${squadPanelTitleClass} mb-8`}>Новобранцы</h3>
             <div className="flex flex-wrap justify-center gap-8">
               {teamRecruitSlots.map(({ member, duty }) => (
-                <div key={member.callsign} className="w-full max-w-[280px]">
+                <div key={`${member.callsign || member.name}-${duty}`} className="w-full max-w-[280px]">
                   <SoldierCard {...member} duty={duty} />
                 </div>
               ))}

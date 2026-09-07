@@ -25,11 +25,13 @@ export const technician: TeamMember = {
   image: asset('/avatars/knyaz.png'),
 };
 
-export const deputySquad1: TeamMember = {
-  name: 'Денис Горбунов',
-  callsign: 'Ганза',
-  image: asset('/avatars/ganza3.png'),
+export const radar: TeamMember = {
+  name: 'Владимир Степанов',
+  callsign: 'Радар',
+  image: asset('/avatars/radar.png'),
 };
+
+export const deputySquad1 = radar;
 
 export const deputySquad2: TeamMember = {
   name: 'Тимур Шакиров',
@@ -37,7 +39,15 @@ export const deputySquad2: TeamMember = {
   image: asset('/avatars/gorizont3.png'),
 };
 
-export const squad1Sergeant: TeamMember = {
+export const archie: TeamMember = {
+  name: 'Денис Горбунов',
+  callsign: 'Арчи',
+  image: asset('/avatars/ganza3.png'),
+};
+
+export const squad1Sergeant = archie;
+
+export const shershen: TeamMember = {
   name: 'Ярослав Цветков',
   callsign: 'Шершень',
   image: asset('/avatars/shershen2.png'),
@@ -49,11 +59,13 @@ export const squad2Sergeant: TeamMember = {
   image: asset('/avatars/yozhik.png'),
 };
 
-export const polsha: TeamMember = {
+export const narkoz: TeamMember = {
   name: 'Максим Полик',
-  callsign: 'Польша',
+  callsign: 'Наркоз',
   image: asset('/avatars/polsha3.png'),
 };
+
+export const polsha = narkoz;
 
 export const valka: TeamMember = {
   name: 'Екатерина Федорова',
@@ -79,12 +91,6 @@ export const demon: TeamMember = {
   image: asset('/avatars/demon.png'),
 };
 
-export const radar: TeamMember = {
-  name: 'Владимир Степанов',
-  callsign: 'Радар',
-  image: asset('/avatars/radar.png'),
-};
-
 export const matros: TeamMember = {
   name: 'Юрий Игнатев',
   callsign: 'Матрос',
@@ -105,6 +111,12 @@ export const mortarman: TeamMember = {
   image: asset('/avatars/shuga2.png'),
 };
 
+export const uavOperator: TeamMember = {
+  name: 'Виктория Сергеева',
+  callsign: 'Скинуха',
+  image: asset('/avatars/skinuha.png'),
+};
+
 export const ovod: TeamMember = {
   name: 'Максим Василенко',
   callsign: 'Овод',
@@ -119,13 +131,13 @@ export const ket: TeamMember = {
   image: asset('/avatars/ket.png'),
 };
 
-export const susanin: TeamMember = {
-  name: 'Сусанин',
-  callsign: 'Сусанин',
-  image: '',
+export const veles: TeamMember = {
+  name: 'Влад Назаров',
+  callsign: 'Велес',
+  image: asset('/avatars/veles.png'),
 };
 
-/** Главная: командир, звенья (замы + старшины), техник — duty = должность, specialty = специальность */
+/** Главная: командир, звенья (замы + старшины), техник */
 export const homeSquads: {
   title: string;
   rows: { duty: string; member: TeamMember; specialty: string }[];
@@ -133,8 +145,8 @@ export const homeSquads: {
   {
     title: '1 звено',
     rows: [
-      { duty: 'Заместитель командира', member: deputySquad1, specialty: 'Марксман' },
-      { duty: 'Старшина', member: squad1Sergeant, specialty: 'Снайпер' },
+      { duty: 'Заместитель командира', member: radar, specialty: 'Связист' },
+      { duty: 'Старшина', member: archie, specialty: 'Марксман' },
     ],
   },
   {
@@ -146,29 +158,27 @@ export const homeSquads: {
   },
 ];
 
-/** Специальность для карточки командира на главной (должность — «Командир» на карточке) */
 export const commanderSpecialtyHome = 'Штурмовик';
 
-/** Страница «Команда»: звенья по специальностям в строках */
 export const teamSquad1Slots: TeamSlot[] = [
   { member: commander, specialty: 'Штурмовик', duty: 'Командир' },
   { member: matros, specialty: 'Штурмовик' },
-  { member: deputySquad1, specialty: 'Марксман', duty: 'Замком' },
-  { member: squad1Sergeant, specialty: 'Снайпер', duty: 'Старшина' },
-  { member: polsha, specialty: 'Медик' },
+  { member: archie, specialty: 'Марксман', duty: 'Старшина' },
+  { member: shershen, specialty: 'Снайпер' },
+  { member: narkoz, specialty: 'Медик' },
   { member: goblin, specialty: 'Пулемётчик' },
+  { member: veles, specialty: 'Гранатомётчик', duty: 'Новобранец-гранатомётчик' },
   { member: ovod, specialty: 'Сапёр' },
-  { member: radar, specialty: 'Связист' },
+  { member: radar, specialty: 'Связист', duty: 'Замком' },
 ];
 
 export const teamSquad2Slots: TeamSlot[] = [
   { member: deputySquad2, specialty: 'Сапёр', duty: 'Замком' },
-  { member: demon, specialty: 'Штурмовик' },
+  { member: demon, specialty: 'Гранатомётчик' },
   { member: squad2Sergeant, specialty: 'Пулемётчик', duty: 'Старшина' },
   { member: ket, specialty: 'Медик', duty: 'Новобранец-медик' },
 ];
 
-/** Порядок строк на странице «Команда»: в каждой строке колонки 1 звено | 2 звено */
 export const teamZvenoRowSpecialtyOrder: string[] = [
   'Штурмовик',
   'Пулемётчик',
@@ -180,7 +190,6 @@ export const teamZvenoRowSpecialtyOrder: string[] = [
   'Медик',
 ];
 
-/** Резерв — вне основного состава звеньев */
 export const teamReserveSlots: TeamSlot[] = [
   { member: valka, specialty: 'Штурмовик' },
   { member: muravey, specialty: 'Гранатомётчик' },
@@ -192,27 +201,31 @@ const recruitMaloy: TeamMember = {
   callsign: 'Малой',
   image: asset('/avatars/maloy.png'),
 };
-const recruitSkinuha: TeamMember = {
-  name: 'Виктория Сергеева',
-  callsign: 'Скинуха',
-  image: asset('/avatars/skinuha.png'),
-};
-const recruitGekon: TeamMember = {
+const recruitGekkon: TeamMember = {
   name: 'Юра Гейко',
-  callsign: 'Гекон',
-  image: '',
+  callsign: 'Геккон',
+  image: asset('/avatars/gekkon.png'),
 };
 const recruitRyzhiy: TeamMember = {
   name: 'Степан Ласточкин',
   callsign: 'Рыжий',
   image: asset('/avatars/ryzhiy.png'),
 };
+const recruitNota: TeamMember = {
+  name: 'Иван Ковалда',
+  callsign: 'Нота',
+  image: '',
+};
+const recruitEfimov: TeamMember = {
+  name: 'Даня Ефимов',
+  callsign: '',
+  image: '',
+};
 
-/** duty — составная подпись на карточке новобранца */
 export const teamRecruitSlots: { member: TeamMember; duty: string }[] = [
   { member: recruitMaloy, duty: 'Новобранец-штурмовик' },
-  { member: recruitSkinuha, duty: 'Новобранец-оператор БПЛА' },
-  { member: recruitGekon, duty: 'Новобранец-штурмовик' },
+  { member: recruitGekkon, duty: 'Новобранец-штурмовик' },
   { member: recruitRyzhiy, duty: 'Новобранец-штурмовик' },
-  { member: susanin, duty: 'Новобранец-штурмовик' },
+  { member: recruitNota, duty: 'Новобранец' },
+  { member: recruitEfimov, duty: 'Новобранец' },
 ];
