@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import logo from '../assets/logo.png';
+import { resolveSeason, seasonAssets } from '../utils/season';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { emblem } = seasonAssets(resolveSeason(new Date(), location.search));
 
   const links = [
     { name: 'Главная', path: '/' },
@@ -14,7 +15,6 @@ const Header = () => {
     { name: 'Рекрутинг', path: '/join' },
     { name: 'Галерея', path: '/gallery' },
     { name: 'Устав', path: '/charter' },
-    { name: 'Методичка', path: '/training' },
     { name: 'Статьи', path: '/articles' },
   ];
 
@@ -29,14 +29,14 @@ const Header = () => {
           <Link to="/" className="flex items-center space-x-3 group">
             {/* Logo Container with circular mask */}
             <div className="relative w-12 h-12 flex items-center justify-center rounded-full overflow-hidden border-2 border-stone-700 group-hover:border-grom-olive transition-colors shadow-md bg-stone-900">
-              <img 
-                src={logo} 
-                alt="ЧСК Гром Шеврон" 
-                className="w-[140%] h-[140%] object-cover"
+              <img
+                src={emblem}
+                alt="ЧСК «Гром» Шеврон"
+                className="h-full w-full origin-center scale-150 object-cover object-center"
               />
             </div>
             <span className="text-xl font-bold tracking-wider text-stone-100 uppercase font-stencil group-hover:text-grom-olive-light transition-colors">
-              ЧСК Гром
+              ЧСК «Гром»
             </span>
           </Link>
 
@@ -74,7 +74,7 @@ const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-grom-bg border-b border-stone-800 overflow-hidden"
+            className="md:hidden bg-grom-bg/95 border-b border-stone-800 overflow-hidden"
           >
             <div className="px-4 pt-2 pb-6 space-y-1">
               {links.map((link) => (

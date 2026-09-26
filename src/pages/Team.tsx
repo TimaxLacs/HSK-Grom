@@ -3,13 +3,11 @@ import { motion } from 'framer-motion';
 import SoldierCard from '../components/SoldierCard';
 import { asset } from '../utils/asset';
 import {
-  mortarman,
   teamRecruitSlots,
   teamReserveSlots,
   teamSquad1Slots,
   teamSquad2Slots,
   teamZvenoRowSpecialtyOrder,
-  uavOperator,
   type TeamSlot,
 } from '../data/teamRoster';
 
@@ -106,27 +104,6 @@ const Team = () => {
                   </div>
                 );
               })}
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <div className="grid md:grid-cols-2 gap-10 lg:gap-16 max-w-5xl mx-auto items-stretch">
-            <div className={`${squadPanelBoxClass} flex flex-col h-full`}>
-              <h3 className={`${squadPanelTitleClass} mb-8`}>Миномётчик</h3>
-              <div className="flex justify-center">
-                <div className="w-full max-w-[280px]">
-                  <SoldierCard {...mortarman} duty="Миномётчик" />
-                </div>
-              </div>
-            </div>
-            <div className={`${squadPanelBoxClass} flex flex-col h-full`}>
-              <h3 className={`${squadPanelTitleClass} mb-8`}>Оператор БПЛА</h3>
-              <div className="flex justify-center">
-                <div className="w-full max-w-[280px]">
-                  <SoldierCard {...uavOperator} duty="Оператор БПЛА" />
-                </div>
-              </div>
             </div>
           </div>
         </section>

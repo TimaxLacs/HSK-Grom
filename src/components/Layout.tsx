@@ -1,12 +1,23 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useLayoutEffect } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import { motion, AnimatePresence } from 'framer-motion';
+import { resolveSeason, seasonAssets } from '../utils/season';
 
 const Layout = () => {
+  const { search } = useLocation();
+
+  useLayoutEffect(() => {
+    const season = resolveSeason(new Date(), search);
+    const { background } = seasonAssets(season);
+    const root = document.documentElement;
+    root.dataset.season = season;
+    root.style.setProperty('--season-bg', `url("${background}")`);
+  }, [search]);
+
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-900 text-white font-sans antialiased overflow-hidden">
+    <div className="season-shell flex flex-col min-h-screen bg-grom-bg/80 text-white font-sans antialiased overflow-hidden">
       <Header />
       
       <main className="flex-grow pt-20"> {/* pt-20 to offset fixed header */}

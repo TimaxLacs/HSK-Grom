@@ -3,13 +3,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, Target, Users, ArrowRight, QrCode, X } from 'lucide-react';
 import ContactModal from '../components/ContactModal';
 import SoldierCard from '../components/SoldierCard';
+import { useLocation } from 'react-router-dom';
 import { asset } from '../utils/asset';
+import { resolveSeason, seasonAssets } from '../utils/season';
 import { commander, commanderSpecialtyHome, technician, homeSquads } from '../data/teamRoster';
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isQrOpen, setIsQrOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const { search } = useLocation();
+  const { banner } = seasonAssets(resolveSeason(new Date(), search));
 
   useEffect(() => {
     if (videoRef.current) {
@@ -22,8 +26,8 @@ const Home = () => {
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Video Background Placeholder */}
-        <div className="absolute inset-0 z-0 bg-grom-bg">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-grom-bg z-10" />
+        <div className="absolute inset-0 z-0 bg-black">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/25 to-transparent z-10" />
           <video 
             ref={videoRef}
             autoPlay 
@@ -86,6 +90,22 @@ const Home = () => {
           <div className="w-6 h-10 border-2 border-stone-400 rounded-full flex justify-center p-1">
             <div className="w-1 h-2 bg-stone-400 rounded-full animate-scroll"></div>
           </div>
+        </motion.div>
+      </section>
+
+      <section className="px-4 py-16 sm:py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mx-auto max-w-5xl"
+        >
+          <img
+            src={banner}
+            alt="Сезонный баннер ЧСК «Гром»"
+            className="h-auto w-full rounded-xl border border-stone-500/40 object-contain shadow-2xl shadow-black/50"
+          />
         </motion.div>
       </section>
 
@@ -156,7 +176,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="relative py-24 px-4 bg-gradient-to-b from-grom-bg via-stone-950/40 to-grom-bg border-t border-white/5">
+      <section className="relative py-24 px-4 border-t border-white/5">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 16 }}

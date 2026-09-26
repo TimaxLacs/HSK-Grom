@@ -43,3 +43,34 @@
     100% { transform: scale(1.1); }
   }
 }
+
+/* Сезон: камуфляж fixed на весь вьюпорт.
+   Вуаль — одно тёмное стекло на оболочке: зима плотнее, демисезон чуть легче.
+   Крупные bg-grom-bg не кладут второй непрозрачный слой.
+   Хедер (bg-grom-bg/90) и карточки stone-900 остаются плотными. */
+html[data-season] {
+  background-color: #120f0c;
+}
+
+html[data-season] body,
+html[data-season] #root {
+  background-color: transparent;
+  background-image: var(--season-bg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100%;
+}
+
+html[data-season="winter"] .season-shell {
+  background-color: rgb(8 6 5 / 0.86);
+}
+
+html[data-season="demi"] .season-shell {
+  background-color: rgb(22 18 14 / 0.74);
+}
+
+html[data-season] .bg-grom-bg {
+  background-color: transparent;
+}
