@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Calendar, User } from 'lucide-react';
 import { asset } from '../utils/asset';
+import { resolveSeason, seasonAssets } from '../utils/season';
 
 interface Article {
   id: number;
@@ -232,6 +234,8 @@ A/A — антибиотик (antibiotics)
 
 const Articles = () => {
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const { search } = useLocation();
+  const { emblem } = seasonAssets(resolveSeason(new Date(), search));
 
   const toggleArticle = (id: number) => {
     setExpandedId(expandedId === id ? null : id);
@@ -243,7 +247,7 @@ const Articles = () => {
         <div className="absolute inset-0 bg-black/60 z-10" />
         <div
           className="absolute inset-0 bg-cover bg-center opacity-70 animate-kenburns"
-          style={{ backgroundImage: `url(${asset('/articles/article-taktika.png')})` }}
+          style={{ backgroundImage: `url(${emblem})` }}
         />
 
         <div className="relative z-20 text-center px-4">
