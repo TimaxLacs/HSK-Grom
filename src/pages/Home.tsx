@@ -107,7 +107,7 @@ const Home = () => {
             alt="Сезонный баннер ЧСК «Гром»"
             className={
               season === 'winter'
-                ? 'aspect-[2.35/1] w-full origin-center scale-[1.72] object-cover object-center'
+                ? 'h-auto w-full origin-center scale-[1.14] object-contain'
                 : 'h-auto w-full object-contain'
             }
           />
