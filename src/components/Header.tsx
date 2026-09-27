@@ -28,14 +28,14 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
             {/* Logo Container with circular mask */}
-            <div className="relative w-12 h-12 flex items-center justify-center rounded-full overflow-hidden border-2 border-stone-700 group-hover:border-grom-olive transition-colors shadow-md bg-stone-900">
+            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border-2 border-stone-600 bg-stone-900 shadow-md transition-colors group-hover:border-grom-olive">
               <img
                 src={emblem}
                 alt="ЧСК «Гром» Шеврон"
-                className="h-full w-full origin-center scale-150 object-cover object-center"
+                className="absolute left-1/2 top-1/2 h-[168%] w-[168%] max-w-none -translate-x-1/2 -translate-y-1/2 object-cover object-center"
               />
             </div>
-            <span className="text-xl font-bold tracking-wider text-stone-100 uppercase font-stencil group-hover:text-grom-olive-light transition-colors">
+            <span className="text-xl font-bold leading-none tracking-wider text-stone-100 uppercase font-stencil group-hover:text-grom-olive-light transition-colors">
               ЧСК «Гром»
             </span>
           </Link>

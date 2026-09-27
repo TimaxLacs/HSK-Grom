@@ -1,19 +1,22 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
+import Snow from './Snow';
 import { motion, AnimatePresence } from 'framer-motion';
-import { resolveSeason, seasonAssets } from '../utils/season';
+import { resolveSeason, seasonAssets, type Season } from '../utils/season';
 
 const Layout = () => {
   const { search } = useLocation();
+  const [season, setSeason] = useState<Season>('demi');
 
   useLayoutEffect(() => {
-    const season = resolveSeason(new Date(), search);
-    const { background } = seasonAssets(season);
+    const next = resolveSeason(new Date(), search);
+    const { background } = seasonAssets(next);
     const root = document.documentElement;
-    root.dataset.season = season;
+    root.dataset.season = next;
     root.style.setProperty('--season-bg', `url("${background}")`);
+    setSeason(next);
   }, [search]);
 
   return (
@@ -34,6 +37,7 @@ const Layout = () => {
       </main>
 
       <Footer />
+      {season === 'winter' && <Snow />}
     </div>
   );
 };

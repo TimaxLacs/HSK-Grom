@@ -13,7 +13,8 @@ const Home = () => {
   const [isQrOpen, setIsQrOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const { search } = useLocation();
-  const { banner } = seasonAssets(resolveSeason(new Date(), search));
+  const season = resolveSeason(new Date(), search);
+  const { banner } = seasonAssets(season);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -99,12 +100,16 @@ const Home = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mx-auto max-w-5xl"
+          className="mx-auto max-w-5xl overflow-hidden rounded-xl border border-stone-500/40 shadow-2xl shadow-black/50"
         >
           <img
             src={banner}
             alt="Сезонный баннер ЧСК «Гром»"
-            className="h-auto w-full rounded-xl border border-stone-500/40 object-contain shadow-2xl shadow-black/50"
+            className={
+              season === 'winter'
+                ? 'aspect-[2.35/1] w-full origin-center scale-[1.72] object-cover object-center'
+                : 'h-auto w-full object-contain'
+            }
           />
         </motion.div>
       </section>
