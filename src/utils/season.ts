@@ -2,19 +2,23 @@ import { asset } from './asset';
 
 export type Season = 'winter' | 'demi';
 
+/**
+ * Принудительная тема.
+ * null — по календарю: зима с 1 декабря по 1 марта, иначе демисезон.
+ * 'winter' или 'demi' — всегда эта тема, пока значение не вернуть на null.
+ */
+export const SEASON_OVERRIDE: Season | null = null;
+
 /** Зима: с 1 декабря включительно до 1 марта не включая. */
 export function isWinterSeason(date: Date = new Date()): boolean {
   const month = date.getMonth();
   return month === 11 || month === 0 || month === 1;
 }
 
-/** Временный показ зимы до конца 29 сентября 2026. С 30 сентября снова календарь. */
-const WINTER_PREVIEW_UNTIL = new Date(2026, 8, 30);
-
 export function resolveSeason(date: Date = new Date(), search: string = ''): Season {
-  const override = new URLSearchParams(search).get('season');
-  if (override === 'winter' || override === 'demi') return override;
-  if (date < WINTER_PREVIEW_UNTIL) return 'winter';
+  const fromUrl = new URLSearchParams(search).get('season');
+  if (fromUrl === 'winter' || fromUrl === 'demi') return fromUrl;
+  if (SEASON_OVERRIDE === 'winter' || SEASON_OVERRIDE === 'demi') return SEASON_OVERRIDE;
   return isWinterSeason(date) ? 'winter' : 'demi';
 }
 
