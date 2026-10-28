@@ -140,7 +140,7 @@ export const ket: TeamMember = {
 export const veles: TeamMember = {
   name: 'Влад Назаров',
   callsign: 'Велес',
-  image: asset('/avatars/veles.png'),
+  image: asset('/avatars/veles.jpg'),
 };
 
 /** Главная: командир, звенья (замы + старшины), техник */
@@ -219,12 +219,7 @@ const recruitGekkon: TeamMember = {
 const recruitNota: TeamMember = {
   name: 'Иван Ковалда',
   callsign: 'Нота',
-  image: '',
-};
-const recruitEfimov: TeamMember = {
-  name: 'Даня Ефимов',
-  callsign: '',
-  image: '',
+  image: asset('/avatars/nota.jpg'),
 };
 const recruitArmizonov: TeamMember = {
   name: 'Артём Армизонов',
@@ -236,6 +231,5 @@ export const teamRecruitSlots: { member: TeamMember; duty: string }[] = [
   { member: recruitGekkon, duty: 'Новобранец-штурмовик' },
   { member: veles, duty: 'Новобранец-гранатомётчик' },
   { member: recruitNota, duty: 'Новобранец' },
-  { member: recruitEfimov, duty: 'Новобранец' },
   { member: recruitArmizonov, duty: 'Новобранец' },
 ];
