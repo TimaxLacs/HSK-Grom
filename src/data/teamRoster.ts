@@ -205,8 +205,8 @@ export const maloy: TeamMember = {
 export const teamReserveSlots: TeamSlot[] = [
   { member: valka, specialty: 'Штурмовик' },
   { member: maloy, specialty: 'Штурмовик' },
-  { member: muravey, specialty: 'Гранатомётчик' },
-  { member: molchun, specialty: 'Связист' },
+  { member: muravey, specialty: 'Штурмовик 2-го звена' },
+  { member: molchun, specialty: 'Штурмовик' },
   { member: ket, specialty: 'Медик' },
   { member: narkoz, specialty: 'Медик' },
 ];
@@ -226,10 +226,29 @@ const recruitArmizonov: TeamMember = {
   callsign: '',
   image: '',
 };
+const recruitShchuka: TeamMember = {
+  name: 'Олег Щукин',
+  callsign: 'Щука',
+  image: '',
+};
+const recruitDzhin: TeamMember = {
+  name: 'Сергей Мицкевич',
+  callsign: 'Джин',
+  image: '',
+};
+const recruitFoma: TeamMember = {
+  name: 'Иван Казьмиров',
+  callsign: 'Фома',
+  image: '',
+};
 
-export const teamRecruitSlots: { member: TeamMember; duty: string }[] = [
-  { member: recruitGekkon, duty: 'Новобранец-штурмовик' },
-  { member: veles, duty: 'Новобранец-гранатомётчик' },
-  { member: recruitNota, duty: 'Новобранец' },
-  { member: recruitArmizonov, duty: 'Новобранец' },
+/** Новобранцы: зелёная подпись на карточке — специальность и звено (если определено) */
+export const teamRecruitSlots: TeamSlot[] = [
+  { member: recruitGekkon, specialty: 'Связист 2-го звена' },
+  { member: veles, specialty: 'Гранатомётчик 1-го звена' },
+  { member: recruitNota, specialty: 'Снайпер 2-го звена' },
+  { member: recruitArmizonov, specialty: 'Штурмовик 2-го звена' },
+  { member: recruitShchuka, specialty: 'Штурмовик 2-го звена' },
+  { member: recruitDzhin, specialty: 'Штурмовик 1-го звена' },
+  { member: recruitFoma, specialty: 'Штурмовик 2-го звена' },
 ];

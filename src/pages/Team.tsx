@@ -112,9 +112,9 @@ const Team = () => {
           <div className={`${squadPanelBoxClass} max-w-6xl mx-auto`}>
             <h3 className={`${squadPanelTitleClass} mb-8`}>Новобранцы</h3>
             <div className="flex flex-wrap justify-center gap-8">
-              {teamRecruitSlots.map(({ member, duty }) => (
-                <div key={`${member.callsign || member.name}-${duty}`} className="w-full max-w-[280px]">
-                  <SoldierCard {...member} duty={duty} />
+              {teamRecruitSlots.map(({ member, specialty }) => (
+                <div key={`${member.callsign || member.name}-${specialty}`} className="w-full max-w-[280px]">
+                  <SoldierCard {...member} duty={specialty} />
                 </div>
               ))}
             </div>
