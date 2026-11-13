@@ -53,7 +53,7 @@ export const shershen: TeamMember = {
   image: asset('/avatars/shershen2.png'),
 };
 
-export const squad2Sergeant: TeamMember = {
+export const yozhik: TeamMember = {
   name: 'Александр Бровкин',
   callsign: 'Ёжик',
   image: asset('/avatars/yozhik.png'),
@@ -105,12 +105,6 @@ export const molchun: TeamMember = {
 
 export const radioman = molchun;
 
-export const shuga: TeamMember = {
-  name: 'Алексей Борис',
-  callsign: 'Шуга',
-  image: asset('/avatars/shuga2.png'),
-};
-
 export const skinuha: TeamMember = {
   name: 'Виктория Сергеева',
   callsign: 'Скинуха',
@@ -123,13 +117,13 @@ export const ryzhiy: TeamMember = {
   image: asset('/avatars/ryzhiy.png'),
 };
 
+export const squad2Sergeant = ryzhiy;
+
 export const ovod: TeamMember = {
   name: 'Максим Василенко',
   callsign: 'Овод',
   image: asset('/avatars/injir.png'),
 };
-
-export const yozhik = squad2Sergeant;
 
 export const ket: TeamMember = {
   name: 'Екатерина Крамскова',
@@ -159,7 +153,7 @@ export const homeSquads: {
     title: '2 звено',
     rows: [
       { duty: 'Заместитель командира', member: deputySquad2, specialty: 'Сапёр' },
-      { duty: 'Старшина', member: squad2Sergeant, specialty: 'Пулемётчик' },
+      { duty: 'Старшина', member: squad2Sergeant, specialty: 'Марксман' },
     ],
   },
 ];
@@ -179,10 +173,9 @@ export const teamSquad1Slots: TeamSlot[] = [
 
 export const teamSquad2Slots: TeamSlot[] = [
   { member: deputySquad2, specialty: 'Сапёр', duty: 'Замком' },
-  { member: shuga, specialty: 'Штурмовик' },
+  { member: yozhik, specialty: 'Пулемётчик' },
   { member: demon, specialty: 'Гранатомётчик' },
-  { member: squad2Sergeant, specialty: 'Пулемётчик', duty: 'Старшина' },
-  { member: ryzhiy, specialty: 'Марксман' },
+  { member: ryzhiy, specialty: 'Марксман', duty: 'Старшина' },
 ];
 
 export const teamZvenoRowSpecialtyOrder: string[] = [
